@@ -29,5 +29,8 @@ public class User {
     @Column
     private Role role;
 
+    @Column
+    private int work = 0;
+
 
 }

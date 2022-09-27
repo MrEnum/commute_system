@@ -8,13 +8,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "commute_table")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Commute {
-
 
     @Id
     private int Id;
@@ -23,12 +22,12 @@ public class Commute {
     private String username;
 
     @Column
-    private Work role;
-
-    @Column
     private LocalDateTime localDateTime;
 
     @JoinColumn(name="user_code")
     @ManyToOne
     private User user;
+
+    @Column
+    private int work;
 }

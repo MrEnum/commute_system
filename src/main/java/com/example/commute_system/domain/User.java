@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.SecondaryTable;
 
 @Entity(name ="User_table")
 @NoArgsConstructor
@@ -18,7 +17,7 @@ import javax.persistence.SecondaryTable;
 public class User {
 
     @Id
-    private int code;
+    private int usercode;
 
     @Column
     private String password;

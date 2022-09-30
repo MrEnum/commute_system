@@ -1,0 +1,37 @@
+package com.example.commute_system.controller;
+
+import com.example.commute_system.domain.User;
+import com.example.commute_system.service.CommuteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.time.LocalDateTime;
+
+@RequiredArgsConstructor
+@Controller
+public class CommuteController {
+    private final LocalDateTime localDateTime;
+    private final CommuteService commuteService;
+
+
+
+    //@SessionAttribute(name = "loginMember", required = false) 이미 로그인 된 사람을 대상으로 씀
+
+
+    //출근
+    @PostMapping("/commute/start")
+    public String startWork(@RequestBody String username) {
+
+        return commuteService.start(username);
+    }
+
+    //퇴근
+    @PostMapping("/commute/finish")
+    public String finishWork(@RequestBody String username) {
+
+        return commuteService.finish(username);
+    }
+}

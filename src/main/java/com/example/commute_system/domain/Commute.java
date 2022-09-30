@@ -15,19 +15,34 @@ import java.time.LocalDateTime;
 @Setter
 public class Commute {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int Id;
 
     @Column
-    private String username;
+    private String name;
 
     @Column
-    private LocalDateTime localDateTime;
+    private String localDateTimeNow;
 
-    @JoinColumn(name="user_code")
+    @JoinColumn(name = "user_code")
     @ManyToOne
     private User user;
 
     @Column
     private int work;
+
+
+    //    Commute(String name, LocalDateTime localDateTime, User user, int work){
+//        this.name = user.getName();
+//        this.localDateTime = localDateTime;
+//        this.user = user;
+//        this.work = work;
+//    }
+    public Commute(String name, String localDateTimeNow, int work) {
+        this.name = user.getName();
+        this.localDateTimeNow = localDateTimeNow;
+        this.work = work;
+    }
+
 }

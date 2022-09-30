@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name ="User_table")
 @NoArgsConstructor
@@ -15,7 +13,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 public class User {
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
 
@@ -30,6 +28,9 @@ public class User {
 
     @Column
     private int work = 0;
+
+    @Column
+    private String name;
 
 
 }

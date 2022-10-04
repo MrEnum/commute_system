@@ -1,21 +1,20 @@
 package com.example.commute_system.controller;
 
-import com.example.commute_system.domain.User;
 import com.example.commute_system.service.CommuteService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
-@RequiredArgsConstructor
-@Controller
+@RestController
+@Component
 public class CommuteController {
-    private final LocalDateTime localDateTime;
+
     private final CommuteService commuteService;
 
+    public CommuteController(CommuteService commuteService) {
+        this.commuteService = commuteService;
+    }
 
 
     //@SessionAttribute(name = "loginMember", required = false) 이미 로그인 된 사람을 대상으로 씀

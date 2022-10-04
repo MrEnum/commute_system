@@ -7,13 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
 public class CommuteService {
     private final CommuteRepository commuteRepository;
-    private final LocalDateTime localDateTime;
+    LocalDateTime localDateTime;
+
+
+
     //
    // private final String localDateTimeNow = localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
@@ -21,18 +23,20 @@ public class CommuteService {
     //출근 메서드
     public String start(String username) {
         int work = 1;
-
-        Commute commute = new Commute(username, localDateTime.now().toString(), work);
+        String now = localDateTime.now().toString();
+        Commute commute = new Commute(username, now, work);
         commuteRepository.save(commute);
-        return localDateTime.now().toString();
+        return now;
     }
 
     //퇴근 메서드
     public String finish(String username) {
         int work = 0;
 
-        Commute commute = new Commute(username, localDateTime.now().toString(), work);
-        return localDateTime.now().toString();
+        String now = localDateTime.now().toString();
+        Commute commute = new Commute(username, now, work);
+        commuteRepository.save(commute);
+        return now;
     }
 
 }

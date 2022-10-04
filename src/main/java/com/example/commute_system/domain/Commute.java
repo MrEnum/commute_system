@@ -15,22 +15,24 @@ import java.time.LocalDateTime;
 @Setter
 public class Commute {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private int Id;
 
-    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "USERNAME", nullable = false)
     private String name;
 
-    @Column
+    @Column(name="LOCALDATETIMENOW", nullable = false)
     private String localDateTimeNow;
 
-    @JoinColumn(name = "user_code")
-    @ManyToOne
-    private User user;
+    //나중에 테이블 추가할 것
+//    @JoinColumn(name = "USER_ID")
+//    @ManyToOne
+//    private User user;
 
-    @Column
-    private int work;
+    @Column(name = "WORK")
+    private int work = 0;
 
 
     //    Commute(String name, LocalDateTime localDateTime, User user, int work){
@@ -39,8 +41,8 @@ public class Commute {
 //        this.user = user;
 //        this.work = work;
 //    }
-    public Commute(String name, String localDateTimeNow, int work) {
-        this.name = user.getName();
+    public Commute(String username, String localDateTimeNow, int work) {
+        this.name = username; // 나중엔 바꿔줘야함
         this.localDateTimeNow = localDateTimeNow;
         this.work = work;
     }

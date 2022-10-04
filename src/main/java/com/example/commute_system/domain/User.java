@@ -13,8 +13,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class User {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
@@ -25,9 +26,6 @@ public class User {
 
     @Column
     private Role role;
-
-    @Column
-    private int work = 0;
 
     @Column
     private String name;

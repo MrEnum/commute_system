@@ -21,19 +21,18 @@ public class CommuteService {
 
 
     //출근 메서드
-    public String start(String username) {
+    public LocalDateTime start(String username) {
         int work = 1;
-        String now = localDateTime.now().toString();
+        LocalDateTime now = localDateTime.now();
         Commute commute = new Commute(username, now, work);
         commuteRepository.save(commute);
         return now;
     }
 
     //퇴근 메서드
-    public String finish(String username) {
+    public LocalDateTime finish(String username) {
         int work = 0;
-
-        String now = localDateTime.now().toString();
+        LocalDateTime now =  localDateTime.now();
         Commute commute = new Commute(username, now, work);
         commuteRepository.save(commute);
         return now;

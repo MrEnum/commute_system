@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @Component
 public class CommuteController {
@@ -22,14 +24,14 @@ public class CommuteController {
 
     //출근
     @PostMapping("/commute/start")
-    public String startWork(@RequestBody String username) {
+    public LocalDateTime startWork(@RequestBody String username) {
 
         return commuteService.start(username);
     }
 
     //퇴근
     @PostMapping("/commute/finish")
-    public String finishWork(@RequestBody String username) {
+    public LocalDateTime finishWork(@RequestBody String username) {
 
         return commuteService.finish(username);
     }

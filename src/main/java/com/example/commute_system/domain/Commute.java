@@ -24,7 +24,7 @@ public class Commute {
     private String name;
 
     @Column(name="LOCALDATETIMENOW", nullable = false)
-    private String localDateTimeNow;
+    private LocalDateTime localDateTimeNow;
 
     //나중에 테이블 추가할 것
 //    @JoinColumn(name = "USER_ID")
@@ -41,7 +41,7 @@ public class Commute {
 //        this.user = user;
 //        this.work = work;
 //    }
-    public Commute(String username, String localDateTimeNow, int work) {
+    public Commute(String username, LocalDateTime localDateTimeNow, int work) {
         this.name = username; // 나중엔 바꿔줘야함
         this.localDateTimeNow = localDateTimeNow;
         this.work = work;

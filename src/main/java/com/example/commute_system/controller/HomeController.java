@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class UserController {
+public class HomeController {
 
 
 
@@ -14,5 +14,12 @@ public class UserController {
     public String login(){
         return "login";
     }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
+
 
 }

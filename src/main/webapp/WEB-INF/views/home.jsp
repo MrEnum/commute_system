@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +9,11 @@
 <body>
 <button class="work_start"
         type="button">
-  ì¶œê·¼
+  Ãâ±Ù
 </button>
 <button class="work_finish"
         type="button">
-  í‡´ê·¼
+  Åð±Ù
 </button>
 </body>
 </html>

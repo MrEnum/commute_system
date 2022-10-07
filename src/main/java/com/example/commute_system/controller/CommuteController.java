@@ -33,7 +33,7 @@ public class CommuteController {
     //퇴근
     @PostMapping("/commute/finish")
     public String finishWork(@RequestBody String username) {
-
+        commuteService.finish(username);
         return localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

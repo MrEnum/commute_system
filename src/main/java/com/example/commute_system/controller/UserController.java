@@ -5,8 +5,9 @@ import com.example.commute_system.domain.UserDetail;
 import com.example.commute_system.service.UserService;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
     /**
      * 회원가입 폼
      * @return
      */
-    @GetMapping("/signUp")
+    @GetMapping("/signup")
     public String signUpForm() {
         return "signup";
     }
@@ -30,9 +35,9 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/signUp")
-    public String signUp(User user) {
-        user.setRole("NORMAL");
+    @PostMapping("/signup")
+    public String signup(User user) {
+        user.setRole(user.getRole());
         userService.joinUser(user);
         return "redirect:/login";
     }
@@ -43,7 +48,7 @@ public class UserController {
      * @param authentication
      * @return
      */
-
+////////////////////////////////// 고쳐야할 부분
     @GetMapping("/")
     public String userAccess(Model model, Authentication authentication) {
         //Authentication 객체를 통해 유저 정보를 가져올 수 있다.

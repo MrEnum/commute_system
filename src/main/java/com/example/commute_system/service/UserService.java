@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService implements UserDetailsService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
 
     //회원가입
@@ -28,14 +28,14 @@ public class UserService implements UserDetailsService {
     public void joinUser(User user){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        repository.save(user);
+        userRepository.save(user);
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증
-        User user = repository.findUserByUsername(email);
+        User user = userRepository.findUserByUsername(email);
         return new UserDetail(user);
     }
 }

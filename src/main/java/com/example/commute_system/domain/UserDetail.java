@@ -9,12 +9,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class UserDetail implements UserDetails {
-    private String email;
+    private String username;
     private String password;
     private String auth;
 
     public UserDetail(User user) {
-        this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.auth = "ROLE_" + user.getRole();
     }
@@ -31,7 +31,7 @@ public class UserDetail implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override

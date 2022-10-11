@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String login(){
-        return "login";
+        return "redirect:/login";
     }
     /**
      * 회원가입 폼
@@ -49,7 +49,7 @@ public class UserController {
      * @return
      */
 ////////////////////////////////// 고쳐야할 부분
-    @GetMapping("/")
+    @GetMapping("/login")
     public String userAccess(Model model, Authentication authentication) {
         //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
         UserDetail userDetail = (UserDetail)authentication.getPrincipal();  //userDetail 객체를 가져옴

@@ -25,7 +25,7 @@ public class UserController {
      * 회원가입 폼
      * @return
      */
-    @GetMapping("/signup")
+    @GetMapping("manager/signup")
     public String signUpForm() {
         return "signup";
     }
@@ -35,7 +35,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/signup")
+    @PostMapping("/manager/signup")
     public String signup(User user) {
         user.setRole(user.getRole());
         userService.joinUser(user);
@@ -54,6 +54,6 @@ public class UserController {
         //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
         UserDetail userDetail = (UserDetail)authentication.getPrincipal();  //userDetail 객체를 가져옴
         model.addAttribute("info", userDetail.getUsername());      //유저 이메일
-        return "user_access";
+        return "home";
     }
 }

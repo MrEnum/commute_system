@@ -1,0 +1,119 @@
+<!--<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="clock.css"/>
+
+
+    <title>Title</title>
+</head>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+    h1{
+        text-align : center;
+    }
+</style>
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // �ð��� ������ ���� ��Ÿ�������� �� ����
+        realTimer();
+        // ���� 0.5�ʿ� �ѹ��� �ð��� �����Ѵ�.
+        setInterval(realTimer, 500);
+    });
+
+    // �ð��� ���
+    function realTimer() {
+        const nowDate = new Date();
+        const year = nowDate.getFullYear();
+        const month= nowDate.getMonth() + 1;
+        const date = nowDate.getDate();
+        const hour = nowDate.getHours();
+        const min = nowDate.getMinutes();
+        const sec = nowDate.getSeconds();
+
+        document.getElementById("nowTimes").innerHTML =
+            year + "-" + addzero(month) + "-" + addzero(date) + "&nbsp;" + hour + ":" + addzero(min) + ":" + addzero(sec);
+
+    }
+    // 1�ڸ����� ������ ��� �տ� 0�� �ٿ��ش�.
+    function addzero(num) {
+        if(num < 10) { num = "0" + num; }
+        return num;
+    }
+
+
+    // <%--const clock = document.querySelector('.h1-clock');--%>
+    // <%--function getTime(){--%>
+    // <%--    const time = new Date();--%>
+    // <%--    const hour = time.getHours();--%>
+    // <%--    const minutes = time.getMinutes();--%>
+    // <%--    const seconds = time.getSeconds();--%>
+    // <%--    //clock.innerHTML = hour +":" + minutes + ":"+seconds;--%>
+    // <%--    clock.innerHTML = `${hour<10 ? `0${hour}`:hour}:${minutes<10 ? `0${minutes}`:minutes}:${seconds<10 ? `0${seconds}`:seconds}`--%>
+    // <%--}--%>
+    //
+    //
+    // <%--function init(){--%>
+    // <%--    setInterval(getTime, 1000);--%>
+    // <%--}--%>
+    //
+    // <%--init();--%>
+</script>
+<script>
+    function getStart() {
+        var username = "�׻���";
+        $.ajax({
+            type: 'POST',
+            async: 'false', //�񵿱�ó�� false�� �⺻���̶� �Ѵ�.
+            url: '/commute/start',
+            data: JSON.stringify(username),       //������ ������ ������
+            contentType: "application/json",
+            success: function (response) {
+                alert(response + "\n ����߽��ϴ�.");
+            },
+        });
+    }
+    function getFinish() {
+        var username = "�׻���";
+        $.ajax({
+            type: 'POST',
+            async: 'false', //�񵿱�ó�� false�� �⺻���̶� �Ѵ�.
+            url: '/commute/finish',
+            data: JSON.stringify(username),       //������ ������ ������
+            contentType: "application/json",
+            success: function (response) {
+                alert(response + "\n ����߽��ϴ�.");
+            },
+        });
+    }
+</script>
+
+<body>
+<button class="work_start"
+        type="button" onclick="getStart()">
+    출근
+</button>
+<button class="work_finish"
+        type="button" onclick="getFinish()">
+    퇴근
+</button>
+
+<button class="commute_list"
+        type="button" >
+    조회
+</button>
+<h1>실시간 : <span id="nowTimes"></span></h1>
+
+<button class="signup"
+        type="button" >
+    회원강비
+</button>
+
+</body>
+</html>

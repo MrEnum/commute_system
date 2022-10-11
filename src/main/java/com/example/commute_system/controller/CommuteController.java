@@ -1,6 +1,7 @@
 package com.example.commute_system.controller;
 
 import com.example.commute_system.service.CommuteService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,15 +26,15 @@ public class CommuteController {
 
     //출근
     @PostMapping("/commute/start")
-    public String startWork(@RequestBody String username) {
-        commuteService.start(username);
+    public String startWork(Authentication authentication) {
+        commuteService.start(authentication.getName());
         return localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     //퇴근
     @PostMapping("/commute/finish")
-    public String finishWork(@RequestBody String username) {
-        commuteService.finish(username);
+    public String finishWork(Authentication authentication) {
+        commuteService.finish(authentication.getName());
         return localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

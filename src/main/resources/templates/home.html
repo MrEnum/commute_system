@@ -70,12 +70,12 @@
         var username = "�׻���";
         $.ajax({
             type: 'POST',
-            async: 'false', //�񵿱�ó�� false�� �⺻���̶� �Ѵ�.
+            async: 'false', //비동기, false값이 기본이다.
             url: '/commute/start',
             data: JSON.stringify(username),       //������ ������ ������
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n ����߽��ϴ�.");
+                alert(response + "\n 현재 시간입니다.");
             },
         });
     }
@@ -83,12 +83,12 @@
         var username = "�׻���";
         $.ajax({
             type: 'POST',
-            async: 'false', //�񵿱�ó�� false�� �⺻���̶� �Ѵ�.
+            async: 'false', //비동기, false값이 기본이다.
             url: '/commute/finish',
             data: JSON.stringify(username),       //������ ������ ������
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n ����߽��ϴ�.");
+                alert(response + "\n 현재 시간입니다.");
             },
         });
     }
@@ -112,7 +112,7 @@
 
 <button class="signup"
         type="button" >
-    회원강비
+    회원가입
 </button>
 
 </body>

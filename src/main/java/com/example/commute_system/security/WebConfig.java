@@ -25,8 +25,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/userAccess").hasRole("NORMAL")
-                .antMatchers("manager/signup").hasRole("MANAGER")
+                .antMatchers("/home").hasAnyRole("NORMAL", "MANAGER")
+                .antMatchers("/signup").hasRole("MANAGER")
                 .and()
                 .formLogin()
 //                .defaultSuccessUrl("/home")

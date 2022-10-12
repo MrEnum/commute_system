@@ -31,6 +31,6 @@ public class User {
     private String name;
 
     @Column
-    private Work work;
+    private String work = "퇴근";
 
 }

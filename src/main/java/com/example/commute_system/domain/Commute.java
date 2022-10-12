@@ -34,7 +34,7 @@ public class Commute {
 //    @ManyToOne
 //    private User user;
     @Column(name = "WORK")
-    private int work = 0;
+    private String work = "";
 
     @Column(name="LOCALDATETIMENOW", nullable = false)
     private LocalDateTime localDateTimeNow;
@@ -45,11 +45,13 @@ public class Commute {
 //        this.user = user;
 //        this.work = work;
 //    }
-    public Commute(String username, String name, LocalDateTime localDateTimeNow, int work) {
+    public Commute(String username, String name, LocalDateTime localDateTimeNow, String work) {
         this.username = username; // 나중엔 바꿔줘야함
         this.name = name;
         this.localDateTimeNow = localDateTimeNow;
         this.work = work;
     }
+
+
 
 }

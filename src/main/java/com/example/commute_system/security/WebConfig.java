@@ -25,13 +25,19 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                .antMatchers("/home").hasAnyRole("NORMAL", "MANAGER")
+                .antMatchers("/index").hasAnyRole("NORMAL", "MANAGER")
                 .antMatchers("/signup").hasRole("MANAGER")
                 .and()
                 .formLogin()
-//                .defaultSuccessUrl("/home")
+//                .defaultSuccessUrl("/index")//로그인 성공시 url
+                .failureUrl("/login")//로그인 실패시 url
                 .and()
-                .csrf().disable();        //로그인 창
+                .csrf().disable()        //로그인 창
+                // [로그아웃 기능]
+                .logout()
+                // 로그아웃 처리 URL
+                .logoutUrl("/user/logout")
+                .permitAll();
 
     }
 //    configure(HttpSecurity http)
@@ -41,6 +47,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 //      anonymous()은 인증되지 않은 즉, 로그인 되지 않은 사용자만 접근 가능하다.
 //      - formLogin() : spring security에서 제공하는 login form을 이용한다는 뜻. 로그인 성공시 '/'로 리다이렉트
 //      - csrf() : 웹 사이트의 취약점을 이용한 의도치 않은 요청을 통한 공격을 의미한다. 이 기능을 disable한 상태이다.
+
     /**
      * 로그인 인증 처리 메소드
      *

@@ -25,14 +25,14 @@ public class CommuteController {
 
 
     //출근
-    @PostMapping("/commute/start")
+    @PostMapping("/normal/start")
     public String startWork(Authentication authentication) {
         commuteService.start(authentication.getName());
         return localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     //퇴근
-    @PostMapping("/commute/finish")
+    @PostMapping("/normal/finish")
     public String finishWork(Authentication authentication) {
         commuteService.finish(authentication.getName());
         return localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

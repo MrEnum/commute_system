@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity(name = "commute_table")
 @NoArgsConstructor
@@ -21,19 +22,22 @@ public class Commute {
     private int id;
 
     @Column(name = "USERNAME", nullable = false)
+    private String username;
+
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name="LOCALDATETIMENOW", nullable = false)
-    private LocalDateTime localDateTimeNow;
+
 
     //나중에 테이블 추가할 것
 //    @JoinColumn(name = "USER_ID")
 //    @ManyToOne
 //    private User user;
-
     @Column(name = "WORK")
     private int work = 0;
 
+    @Column(name="LOCALDATETIMENOW", nullable = false)
+    private LocalDateTime localDateTimeNow;
 
     //    Commute(String name, LocalDateTime localDateTime, User user, int work){
 //        this.name = user.getName();
@@ -41,8 +45,9 @@ public class Commute {
 //        this.user = user;
 //        this.work = work;
 //    }
-    public Commute(String username, LocalDateTime localDateTimeNow, int work) {
-        this.name = username; // 나중엔 바꿔줘야함
+    public Commute(String username, String name, LocalDateTime localDateTimeNow, int work) {
+        this.username = username; // 나중엔 바꿔줘야함
+        this.name = name;
         this.localDateTimeNow = localDateTimeNow;
         this.work = work;
     }

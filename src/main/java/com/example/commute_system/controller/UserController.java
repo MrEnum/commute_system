@@ -17,43 +17,49 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/")
-    public String login(){
-        return "redirect:/login";
-    }
+
     /**
      * 회원가입 폼
+     *
      * @return
      */
-    @GetMapping("/signup")
+
+    @GetMapping("/manager/signup")
     public String signUpForm() {
         return "signup";
     }
 
     /**
      * 회원가입 진행
+     *
      * @param user
      * @return
      */
-    @PostMapping("/signup")
+
+    @PostMapping("/manager/signup")
     public String signup(User user) {
         user.setRole(user.getRole());
         userService.joinUser(user);
-        return "redirect:/home";
+        return "redirect:/index";
     }
 
     /**
      * 유저 페이지
+     *
      * @param model
      * @param authentication
      * @return
      */
-////////////////////////////////// 고쳐야할 부분
-    @GetMapping("/login")
-    public String userAccess(Model model, Authentication authentication) {
-        //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
-        UserDetail userDetail = (UserDetail)authentication.getPrincipal();  //userDetail 객체를 가져옴
-        model.addAttribute("info", userDetail.getUsername());      //유저 아이디
-        return "home";
+    @GetMapping("/")
+    public String loginAccess(Model model, Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/login";
+        } else {
+            //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
+            UserDetail userDetail = (UserDetail) authentication.getPrincipal();  //userDetail 객체를 가져옴
+            model.addAttribute("info", userDetail.getUsername());      //유저 아이디
+            return "index";
+        }
+
     }
 }

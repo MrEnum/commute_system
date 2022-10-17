@@ -36,8 +36,8 @@ dependencies {
 //    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
     //thymleaf추가
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     //JSP
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'javax.servlet:jstl'

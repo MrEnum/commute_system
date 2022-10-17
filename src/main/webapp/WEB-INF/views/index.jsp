@@ -1,4 +1,6 @@
-<!--<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>-->
+<!--
+<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>
+-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +16,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <style>
-    h1{
-        text-align : center;
+    h1 {
+        text-align: center;
     }
 </style>
 <script type="text/javascript">
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         //
         realTimer();
         //
@@ -31,7 +33,7 @@
     function realTimer() {
         const nowDate = new Date();
         const year = nowDate.getFullYear();
-        const month= nowDate.getMonth() + 1;
+        const month = nowDate.getMonth() + 1;
         const date = nowDate.getDate();
         const hour = nowDate.getHours();
         const min = nowDate.getMinutes();
@@ -41,9 +43,12 @@
             year + "-" + addzero(month) + "-" + addzero(date) + "&nbsp;" + hour + ":" + addzero(min) + ":" + addzero(sec);
 
     }
+
     //
     function addzero(num) {
-        if(num < 10) { num = "0" + num; }
+        if (num < 10) {
+            num = "0" + num;
+        }
         return num;
     }
 
@@ -66,57 +71,59 @@
     // <%--init();--%>
 </script>
 <script>
+    //Ãâ±Ù ¹öÆ°
     function getStart() {
-
         $.ajax({
             type: 'POST',
-            async: 'false', //ë¹„ë™ê¸°, falseê°’ì´ ê¸°ë³¸ì´ë‹¤.
+            async: 'false', //ºñµ¿±â, false°ªÀÌ ±âº»ÀÌ´Ù.
             url: '/normal/start',
-            // data: JSON.stringify(),       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // data: JSON.stringify(),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n í˜„ì¬ ì‹œê°„ì…ë‹ˆë‹¤.");
+                alert(response + "\n ÇöÀç ½Ã°£ÀÔ´Ï´Ù.");
             },
         });
     }
-    function getFinish() {
 
+    //Åğ±Ù ¹öÆ°
+    function getFinish() {
         $.ajax({
             type: 'POST',
-            async: 'false', //ë¹„ë™ê¸°, falseê°’ì´ ê¸°ë³¸ì´ë‹¤.
+            async: 'false', //ºñµ¿±â, false°ªÀÌ ±âº»ÀÌ´Ù.
             url: '/normal/finish',
-            // data: JSON.stringify(username),       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // data: JSON.stringify(username),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n í˜„ì¬ ì‹œê°„ì…ë‹ˆë‹¤.");
+                alert(response + "\n ÇöÀç ½Ã°£ÀÔ´Ï´Ù.");
             },
         });
     }
 </script>
-
+<h1>½Ç½Ã°£ : <span id="nowTimes"> </span></h1>
 <body>
 <button class="work_start"
         type="button" onclick="getStart()">
-    ì¶œê·¼
+    Ãâ±Ù
 </button>
 <button class="work_finish"
         type="button" onclick="getFinish()">
-    í‡´ê·¼
+    Åğ±Ù
 </button>
 
 <button class="commute_list"
-        type="button" >
-    ì¡°íšŒ
+        type="button" onclick="location.href='commute_list'">
+    Á¶È¸
 </button>
-<h1>ì‹¤ì‹œê°„ : <span id="nowTimes"></span></h1>
-
 <button class="signup"
-        type="button" >
-    íšŒì›ê°€ì…
+    type="button" onclick="location.href='manager/signup'">
+È¸¿ø°¡ÀÔ
 </button>
-<!--ë¡œê·¸ì•„ì›ƒ-->
+
+
+
+<!--·Î±×¾Æ¿ô-->
 <form id="my_form" method="post" action="/user/logout">
-    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">ë¡œê·¸ì•„ì›ƒ</a>
+    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">·Î±×¾Æ¿ô</a>
 </form>
 
 </body>

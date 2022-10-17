@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +6,12 @@
 </head>
 
 <body>
-<table class="table test">
+<table class="table">
     <tr>
-        <th>ÀÌ¸§</th>
-        <th>ÃâÅğ±Ù</th>
-        <th>³¯Â¥½Ã°£</th>
+        <th>ì•„ì´ë””</th>
+        <th>ì´ë¦„</th>
+        <th>ì¶œí‡´ê·¼</th>
+        <th>ë‚ ì§œì‹œê°„</th>
     </tr>
 
     <tbody id="table1">
@@ -20,29 +19,43 @@
     </tbody>
 </table>
 <script>
-    var myArray = [
-        {'ÀÌ¸§': 'È«ÁØÇ¥', 'ÃâÅğ±Ù': 'Ãâ±Ù', '³¯Â¥½Ã°£': '2022-09-29T14:20:15'},
-        {'ÀÌ¸§': 'ÀÌ¸í¹Ú', 'ÃâÅğ±Ù': 'Åğ±Ù', '³¯Â¥½Ã°£': '2022-09-29T14:20:15'},
-        {'ÀÌ¸§': '¹Ú±ÙÇı', 'ÃâÅğ±Ù': ' Ãâ±Ù', '³¯Â¥½Ã°£': '2022-09-29T14:20:15'},
-        {'ÀÌ¸§': '¹ÚºÀ±â', 'ÃâÅğ±Ù': ' Åğ±Ù', '³¯Â¥½Ã°£': '2022-09-29T14:20:15'},
+    // var myArray = [
+    //     {'ì•„ì´ë””' : {username}"'ì´ë¦„': "{name}", 'ì¶œí‡´ê·¼': 'ì¶œê·¼', 'ë‚ ì§œì‹œê°„': '2022-09-29T14:20:15'},
+    // ]
+    //
+    // buildTable(myArray)
 
-    ]
-
-    buildTable(myArray)
-
-    function buildTable(data) {
+    function buildTable(commuteList) {
         var table = document.getElementById('table1')
 
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < commuteList.length; i++) {
             var row = `<tr>
-                    <td>${data[i].ÀÌ¸§}</td>
-                    <td>${data[i].ÃâÅğ±Ù}</td>
-                    <td>${data[i].³¯Â¥½Ã°£}</td>
+                    <td>${commuteList[i].username}</td>
+                    <td>${commuteList[i].name}</td>
+                    <td>${commuteList[i].work}</td>
+                    <td>${commuteList[i].dateTime}</td>
                    </tr>`
             table.innerHTML += row
         }
     }
 
+    $(document).ready(function showList() {
+        // 1. GET /api/products ìš”ì²­
+        // 2. #product-container(ê´€ì‹¬ìƒí’ˆ ëª©ë¡), #search-result-box(ê²€ìƒ‰ê²°ê³¼ ëª©ë¡) ë¹„ìš°ê¸°
+        // 3. for ë¬¸ ë§ˆë‹¤ addProductItem í•¨ìˆ˜ ì‹¤í–‰ì‹œí‚¤ê³  HTML ë§Œë“¤ì–´ì„œ #product-container ì— ë¶™ì´ê¸°
+        $.ajax({
+            type: 'GET',
+            url:'/list',
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    $('#table1').empty(); //í•œ ë²ˆ ë¹„ì›Œì¤˜ë¼
+                    let commuteList = response[i];
+                    let tempHtml = buildTable(commuteList);
+                    $('#table1').append(tempHtml);
+                }
+            }
+        })
+    })
 
 </script>
 </body>

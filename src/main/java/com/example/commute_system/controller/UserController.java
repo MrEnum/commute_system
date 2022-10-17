@@ -3,8 +3,9 @@ package com.example.commute_system.controller;
 import com.example.commute_system.domain.User;
 import com.example.commute_system.domain.UserDetail;
 import com.example.commute_system.service.UserService;
-import groovy.util.logging.Slf4j;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class UserController {
     public String signup(User user) {
         user.setRole(user.getRole());
         userService.joinUser(user);
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**

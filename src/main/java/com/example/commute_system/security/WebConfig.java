@@ -24,9 +24,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
-                .antMatchers("/index").hasAnyRole("NORMAL", "MANAGER")
-                .antMatchers("/signup").hasRole("MANAGER")
+                .antMatchers("/index","/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
+                .antMatchers("/manager/signup").hasRole("MANAGER")
                 .and()
                 .formLogin()
 //                .defaultSuccessUrl("/index")//로그인 성공시 url

@@ -3,7 +3,6 @@ package com.example.commute_system.service;
 
 import com.example.commute_system.domain.Commute;
 import com.example.commute_system.domain.User;
-import com.example.commute_system.domain.Work;
 import com.example.commute_system.repository.CommuteRepository;
 import com.example.commute_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -69,5 +68,13 @@ public class CommuteService {
         return "퇴근 완료";
     }
 
+    public List<Commute> getCommuteList(String username) {
+        User user = userRepository.findUserByUsername(username);
+        //일반 사원일 경우
+        if(user.getRole().equals("NORMAL")){
+            return commuteRepository.findAllByUsername(username);
+        }
+        return commuteRepository.findAll();
+    }
 }
 

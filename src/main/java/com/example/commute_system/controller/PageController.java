@@ -17,16 +17,17 @@ public class PageController {
 
 
 
-    //리스트 페이지 가져오기
-//    @GetMapping("/commute_list")
-//    public String getCommutePage(){
-//        return "commute_list";
-//    }
+
     @GetMapping("/commute_list")
     public String commuteList(Model model, Authentication authentication) {
         List<Commute> list = commuteService.getCommuteList(authentication.getName());
         model.addAttribute("list", list);
 
         return "commute_list";
+    }
+    @GetMapping("/signup/failure")
+    public String failureSignup() {
+
+        return "failure_signup";
     }
 }

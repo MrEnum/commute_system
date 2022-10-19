@@ -8,6 +8,7 @@ import com.example.commute_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,15 +18,16 @@ import java.util.List;
 public class CommuteService {
     private final CommuteRepository commuteRepository;
     private final UserRepository userRepository;
-    LocalDateTime now = LocalDateTime.now();
+
 
 
     //
     // private final String localDateTimeNow = localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-
+    @Transactional
     //출근 메서드
     public String start(String username) {
+        LocalDateTime now = LocalDateTime.now();
         String work = "출근";
         User user = userRepository.findUserByUsername(username);//user정보 조회
         //출퇴근상태체크
@@ -39,9 +41,10 @@ public class CommuteService {
         commuteRepository.save(commute);
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
-
+    @Transactional
     //퇴근 메서드
     public String finish(String username) {
+        LocalDateTime now = LocalDateTime.now();
         String work = "퇴근";
         User user = userRepository.findUserByUsername(username);
         //출퇴근상태체크
@@ -67,7 +70,7 @@ public class CommuteService {
         userRepository.save(user);
         return "퇴근 완료";
     }
-
+    @Transactional
     public List<Commute> getCommuteList(String username) {
         User user = userRepository.findUserByUsername(username);
         //일반 사원일 경우

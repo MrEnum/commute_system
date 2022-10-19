@@ -26,17 +26,22 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/index","/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
                 .antMatchers("/manager/signup").hasRole("MANAGER")
+
                 .and()
                 .formLogin()
+                .permitAll()
 //                .defaultSuccessUrl("/index")//로그인 성공시 url
-                .failureUrl("/login")//로그인 실패시 url
+//                .failureUrl("/login/failure")//로그인 실패시 url
                 .and()
                 .csrf().disable()        //로그인 창
                 // [로그아웃 기능]
                 .logout()
                 // 로그아웃 처리 URL
                 .logoutUrl("/user/logout")
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
 
     }
 //    configure(HttpSecurity http)

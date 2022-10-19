@@ -4,10 +4,8 @@ import com.example.commute_system.domain.Commute;
 import com.example.commute_system.service.CommuteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +20,7 @@ public class CommuteController {
     public CommuteController(CommuteService commuteService) {
         this.commuteService = commuteService;
     }
+
     LocalDateTime localDateTime;
 
     //@SessionAttribute(name = "loginMember", required = false) 이미 로그인 된 사람을 대상으로 씀
@@ -30,11 +29,14 @@ public class CommuteController {
     //출근
     @PostMapping("/normal/start")
     public String startWork(Authentication authentication) {
-        return  commuteService.start(authentication.getName());
+
+        return commuteService.start(authentication.getName());
     }
+
     //퇴근
     @PostMapping("/normal/finish")
     public String finishWork(Authentication authentication) {
+
         return commuteService.finish(authentication.getName());
     }
 
@@ -44,10 +46,6 @@ public class CommuteController {
 //    }
 
 
-
     //리스트 조회
-    @GetMapping("/commute_list/getlist")
-    public List<Commute> commuteList(Authentication authentication){
-        return commuteService.getCommuteList(authentication.getName());
-    }
+
 }

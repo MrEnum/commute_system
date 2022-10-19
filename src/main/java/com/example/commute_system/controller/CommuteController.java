@@ -43,11 +43,7 @@ public class CommuteController {
 //        return "redirect:commute_list";
 //    }
 
-    //리스트 페이지 가져오기
-    @GetMapping("/commute_list")
-    public String getCommutePage(){
-        return "commute_list";
-    }
+
 
     //리스트 조회
     @GetMapping("/commute_list/getlist")

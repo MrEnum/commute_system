@@ -1,61 +1,78 @@
+<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script></head>
 
 <body>
-<table class="table">
+<table class="table" onload="showList()">
     <tr>
-        <th>ì•„ì´ë””</th>
-        <th>ì´ë¦„</th>
-        <th>ì¶œí‡´ê·¼</th>
-        <th>ë‚ ì§œì‹œê°„</th>
+        <th>¾ÆÀÌµğ</th>
+        <th>ÀÌ¸§</th>
+        <th>ÃâÅğ±Ù</th>
+        <th>³¯Â¥½Ã°£</th>
     </tr>
-
+    <button class="getList"
+            type="button" onclick="showList()">
+        Á¶È¸
+    </button>
     <tbody id="table1">
 
     </tbody>
 </table>
 <script>
     // var myArray = [
-    //     {'ì•„ì´ë””' : {username}"'ì´ë¦„': "{name}", 'ì¶œí‡´ê·¼': 'ì¶œê·¼', 'ë‚ ì§œì‹œê°„': '2022-09-29T14:20:15'},
+    //     {'¾ÆÀÌµğ' : {username}"'ÀÌ¸§': "{name}", 'ÃâÅğ±Ù': 'Ãâ±Ù', '³¯Â¥½Ã°£': '2022-09-29T14:20:15'},
     // ]
     //
     // buildTable(myArray)
 
-    function buildTable(commuteList) {
-        var table = document.getElementById('table1')
 
-        for (var i = 0; i < commuteList.length; i++) {
-            var row = `<tr>
-                    <td>${commuteList[i].username}</td>
-                    <td>${commuteList[i].name}</td>
-                    <td>${commuteList[i].work}</td>
-                    <td>${commuteList[i].dateTime}</td>
-                   </tr>`
-            table.innerHTML += row
-        }
-    }
+    function showList() {
 
-    $(document).ready(function showList() {
-        // 1. GET /api/products ìš”ì²­
-        // 2. #product-container(ê´€ì‹¬ìƒí’ˆ ëª©ë¡), #search-result-box(ê²€ìƒ‰ê²°ê³¼ ëª©ë¡) ë¹„ìš°ê¸°
-        // 3. for ë¬¸ ë§ˆë‹¤ addProductItem í•¨ìˆ˜ ì‹¤í–‰ì‹œí‚¤ê³  HTML ë§Œë“¤ì–´ì„œ #product-container ì— ë¶™ì´ê¸°
+        // 1. GET /api/products ¿äÃ»
+        // 2. #product-container(°ü½É»óÇ° ¸ñ·Ï), #search-result-box(°Ë»ö°á°ú ¸ñ·Ï) ºñ¿ì±â
+        // 3. for ¹® ¸¶´Ù addProductItem ÇÔ¼ö ½ÇÇà½ÃÅ°°í HTML ¸¸µé¾î¼­ #product-container ¿¡ ºÙÀÌ±â
         $.ajax({
             type: 'GET',
-            url:'/list',
+            url: '/commute_list/getlist',
+            contentType: "application/json",
             success: function (response) {
+                console.log("response : " + response);
                 for (let i = 0; i < response.length; i++) {
-                    $('#table1').empty(); //í•œ ë²ˆ ë¹„ì›Œì¤˜ë¼
+                    // $('#table1').empty(); //ÇÑ ¹ø ºñ¿öÁà¶ó
                     let commuteList = response[i];
-                    let tempHtml = buildTable(commuteList);
-                    $('#table1').append(tempHtml);
+                    buildTable(commuteList);
+
                 }
             }
         })
-    })
+    }
+
+    function buildTable(commuteList) {
+
+        var username = commuteList.username;
+        var name = commuteList.name;
+        var work = commuteList.work;
+        var dateTime = commuteList.localDateTimeNow;
+
+        console.log('¹éÆ½username', `${username}` );
+        var table = document.getElementById('table1');
+        console.log('Ã¹¹øÂ°table',table)
+        console.log('table1',$('#table1'))
+
+        var row = "<tr><td>" +username +"</td><td>" + name+ "</td><td>" + work + "</td><td>" + dateTime + "</td></tr>"
+        console.log('row',row);
+        table.innerHTML += row;
+        console.log('µÎ¹øÂ°table', table);
+        // $('#table1').append(row);
+        console.log('table2',$('#table1'))
+    }
+
 
 </script>
 </body>

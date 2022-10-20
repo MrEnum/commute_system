@@ -1,6 +1,5 @@
-<!--
-<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>
--->
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,59 +70,59 @@
     // <%--init();--%>
 </script>
 <script>
-    //Ãâ±Ù ¹öÆ°
+    //ì¶œê·¼ ë²„íŠ¼
     function getStart() {
         $.ajax({
             type: 'POST',
-            async: 'false', //ºñµ¿±â, false°ªÀÌ ±âº»ÀÌ´Ù.
+            async: 'false', //ë¹„ë™ê¸°, falseê°’ì´ ê¸°ë³¸ì´ë‹¤.
             url: '/normal/start',
             // data: JSON.stringify(),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n ÇöÀç ½Ã°£ÀÔ´Ï´Ù.");
+                alert(response + "\n í˜„ì¬ ì‹œê°„ì…ë‹ˆë‹¤.");
             },
         });
     }
 
-    //Åğ±Ù ¹öÆ°
+    //í‡´ê·¼ ë²„íŠ¼
     function getFinish() {
         $.ajax({
             type: 'POST',
-            async: 'false', //ºñµ¿±â, false°ªÀÌ ±âº»ÀÌ´Ù.
+            async: 'false', //ë¹„ë™ê¸°, falseê°’ì´ ê¸°ë³¸ì´ë‹¤.
             url: '/normal/finish',
             // data: JSON.stringify(username),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n ÇöÀç ½Ã°£ÀÔ´Ï´Ù.");
+                alert(response + "\n í˜„ì¬ ì‹œê°„ì…ë‹ˆë‹¤.");
             },
         });
     }
 </script>
-<h1>½Ç½Ã°£ : <span id="nowTimes"> </span></h1>
+<h1>ì‹¤ì‹œê°„ : <span id="nowTimes"> </span></h1>
 <body>
 <button class="work_start"
         type="button" onclick="getStart()">
-    Ãâ±Ù
+    ì¶œê·¼
 </button>
 <button class="work_finish"
         type="button" onclick="getFinish()">
-    Åğ±Ù
+    í‡´ê·¼
 </button>
 
 <button class="commute_list"
         type="button" onclick="location.href='commute_list'">
-    Á¶È¸
+    ì¡°íšŒ
 </button>
 <button class="signup"
     type="button" onclick="location.href='manager/signup'">
-È¸¿ø°¡ÀÔ
+íšŒì›ê°€ì…
 </button>
 
 
 
-<!--·Î±×¾Æ¿ô-->
+<!--ë¡œê·¸ì•„ì›ƒ-->
 <form id="my_form" method="post" action="/user/logout">
-    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">·Î±×¾Æ¿ô</a>
+    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">ë¡œê·¸ì•„ì›ƒ</a>
 </form>
 
 </body>

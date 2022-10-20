@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR" %>
+<%@ page contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,14 +11,14 @@
 
 <body>
 <div>
-    <a href="/">Ȩ����</a>
+    <a href="/">홈으로</a>
 </div>
 <table class="table">
     <tr>
-        <th>���̵�</th>
-        <th>�̸�</th>
-        <th>�����</th>
-        <th>��¥�ð�</th>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>출퇴근</th>
+        <th>날짜시간</th>
     </tr>
     <tbody id="table1">
     <c:forEach var="list" items="${list}">

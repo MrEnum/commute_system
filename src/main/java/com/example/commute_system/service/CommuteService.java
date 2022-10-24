@@ -20,7 +20,6 @@ public class CommuteService {
     private final UserRepository userRepository;
 
 
-
     //
     // private final String localDateTimeNow = localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
@@ -41,6 +40,7 @@ public class CommuteService {
         commuteRepository.save(commute);
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
     @Transactional
     //퇴근 메서드
     public String finish(String username) {
@@ -65,19 +65,22 @@ public class CommuteService {
         userRepository.save(user);
         return "출근 완료";
     }
+
     public String setFinish(User user) {
         user.setWork("퇴근");
         userRepository.save(user);
         return "퇴근 완료";
     }
+
     @Transactional
     public List<Commute> getCommuteList(String username) {
         User user = userRepository.findUserByUsername(username);
         //일반 사원일 경우
-        if(user.getRole().equals("NORMAL")){
+        if (user.getRole().equals("NORMAL")) {
             return commuteRepository.findAllByUsername(username);
+        } else {
+            return commuteRepository.findAll();
         }
-        return commuteRepository.findAll();
     }
 }
 

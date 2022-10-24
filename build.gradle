@@ -42,6 +42,8 @@ dependencies {
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'javax.servlet:jstl'
 
+//    JSP hot reload 설정하기 (재시동 x)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 
 }

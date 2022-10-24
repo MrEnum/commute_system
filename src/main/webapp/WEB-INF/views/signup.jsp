@@ -18,5 +18,9 @@
 
     <button>회원가입</button>
 </form>
+
+<div>
+    <a href="/">취소</a>
+</div>
 </body>
 </html>

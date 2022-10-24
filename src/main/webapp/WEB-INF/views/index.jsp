@@ -9,18 +9,82 @@
 
 
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<%------------------------------------------------------------------------------------%>
 <style>
-    h1 {
-        text-align: center;
+    times_square {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        text-align: center; /* Quirks Mode 를 위한 가운데 정렬 */
+        width: 100%;
+        padding: 0;
+        margin: 0;
+
     }
 </style>
-<script type="text/javascript">
 
+<h1 calss="times_square" style="padding: 0px 0px 100px 0px;">실시간 : <span id="nowTimes"> </span></h1>
+
+<%----------------------------------------------------------------------------------------%>
+<body>
+<div>
+    <div style="padding: 0px 0PX 50px 0px;font-size:30px;margin-right: 50px; margin-left:  50px;">
+        <div>
+            <%--회원가입--%>
+            <button class="signup" style="margin-right: 270px;"
+                    type="button" onclick="location.href='manager/signup'">
+                회원가입
+            </button>
+
+            <%--출퇴근 조회--%>
+            <button class="commute_list" style="margin-left: 270px;"
+                    type="button" onclick="location.href='commute_list'">
+                조회
+            </button>
+        </div>
+    </div>
+
+    <div>
+
+        <div>
+            <%--출근 퇴근 버튼--%>
+            <div style="padding: 0px 0px 100px 0px;">
+                <button class="btn btn-primary" style="font-size:100px; padding:60px 90px"
+                        type="button" onclick="getStart()">
+                    출근
+                </button>
+                <button class="btn btn-danger" style="font-size:100px; padding:60px 90px"
+                        type="button" onclick="getFinish()">
+                    퇴근
+                </button>
+            </div>
+
+            <div>
+
+                <!--로그아웃-->
+                <form id="my_form" method="post" action="/user/logout" style="font-size: 50px;">
+                    <a id="logout-text" href="javascript:{}"
+                       onclick="document.getElementById('my_form').submit();">로그아웃</a>
+                </form>
+            </div>
+            <br>
+
+
+        </div>
+    </div>
+</div>
+
+<%---------------------------------------------script-----------------------------------------------------------------------%>
+<script type="text/javascript">
+    //실시간 표시해주기
     document.addEventListener("DOMContentLoaded", function () {
         //
         realTimer();
@@ -28,7 +92,7 @@
         setInterval(realTimer, 500);
     });
 
-    //
+    //시간 쪼개서 붙여넣기
     function realTimer() {
         const nowDate = new Date();
         const year = nowDate.getFullYear();
@@ -43,7 +107,7 @@
 
     }
 
-    //
+    //시간 "0" 붙여주기
     function addzero(num) {
         if (num < 10) {
             num = "0" + num;
@@ -51,25 +115,6 @@
         return num;
     }
 
-
-    // <%--const clock = document.querySelector('.h1-clock');--%>
-    // <%--function getTime(){--%>
-    // <%--    const time = new Date();--%>
-    // <%--    const hour = time.getHours();--%>
-    // <%--    const minutes = time.getMinutes();--%>
-    // <%--    const seconds = time.getSeconds();--%>
-    // <%--    //clock.innerHTML = hour +":" + minutes + ":"+seconds;--%>
-    // <%--    clock.innerHTML = `${hour<10 ? `0${hour}`:hour}:${minutes<10 ? `0${minutes}`:minutes}:${seconds<10 ? `0${seconds}`:seconds}`--%>
-    // <%--}--%>
-    //
-    //
-    // <%--function init(){--%>
-    // <%--    setInterval(getTime, 1000);--%>
-    // <%--}--%>
-    //
-    // <%--init();--%>
-</script>
-<script>
     //출근 버튼
     function getStart() {
         $.ajax({
@@ -98,32 +143,5 @@
         });
     }
 </script>
-<h1>실시간 : <span id="nowTimes"> </span></h1>
-<body>
-<button class="work_start"
-        type="button" onclick="getStart()">
-    출근
-</button>
-<button class="work_finish"
-        type="button" onclick="getFinish()">
-    퇴근
-</button>
-
-<button class="commute_list"
-        type="button" onclick="location.href='commute_list'">
-    조회
-</button>
-<button class="signup"
-    type="button" onclick="location.href='manager/signup'">
-회원가입
-</button>
-
-
-
-<!--로그아웃-->
-<form id="my_form" method="post" action="/user/logout">
-    <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
-</form>
-
 </body>
 </html>

@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
@@ -104,13 +105,6 @@
             transform: translateX(100%);
         }
 
-        .sign-up-container {
-            left: 0;
-            width: 50%;
-            opacity: 0;
-            z-index: 1;
-        }
-
         .container.right-panel-active .sign-up-container {
             transform: translateX(100%);
             opacity: 1;
@@ -131,38 +125,21 @@
         }
 
 
-
-        .container.right-panel-active .overlay-container{
+        .container.right-panel-active .overlay-container {
             transform: translateX(-100%);
         }
-
 
 
         .container.right-panel-active .overlay {
             transform: translateX(50%);
         }
 
-
-
-        .overlay-left {
-            transform: translateX(-20%);
-        }
-
         .container.right-panel-active .overlay-left {
-            transform: translateX(0);
-        }
-
-        .overlay-right {
-            right: 0;
             transform: translateX(0);
         }
 
         .container.right-panel-active .overlay-right {
             transform: translateX(20%);
-        }
-
-        .social-container {
-            margin: 20px 0;
         }
 
         .social-container a {
@@ -203,7 +180,6 @@
     </style>
 
 
-
 </head>
 
 <!--http 메소드, action태그 : 폼 데이터(form data)를 서버로 보낼 때 해당 데이터가 도착할 URL을 명시-->
@@ -211,7 +187,7 @@
 
     username : <input type="username" name="username"><br>
     password : <input type="password" name="password"><br>
-<%--    role : <input type="role" name="role"><br>--%>
+    <%--    role : <input type="role" name="role"><br>--%>
     <h2>role : </h2>
     <select class="form-control" type="role" name="role" style="  width: 50%;">
         <option>NORMAL</option>

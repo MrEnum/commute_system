@@ -36,7 +36,7 @@
 <%----------------------------------------------------------------------------------------%>
 <body>
 <div>
-    <div style="padding: 0px 0PX 50px 0px;font-size:30px;margin-right: 50px; margin-left:  50px;">
+    <div style="padding: 0px 0PX 50px 0px;font-size:30px;margin-right: 50px; margin-left: 50px;">
         <div>
             <%--회원가입--%>
             <button class="signup" style="margin-right: 270px;"

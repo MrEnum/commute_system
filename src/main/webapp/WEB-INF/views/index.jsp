@@ -124,7 +124,7 @@
             // data: JSON.stringify(),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n 현재 시간입니다.");
+                alert(response );
             },
         });
     }
@@ -138,7 +138,7 @@
             // data: JSON.stringify(username),
             contentType: "application/json",
             success: function (response) {
-                alert(response + "\n 현재 시간입니다.");
+                alert(response);
             },
         });
     }

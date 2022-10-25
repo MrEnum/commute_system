@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<div style="padding: 0px 0PX 50px 0px;font-size:20px; margin-right: 50px; margin-left: 50px;">
+<div style="padding: 0px 0PX 30px 0px;font-size:10px; margin-right: 50px; margin-left: 50px;">
 <%--    홈으로--%>
     <a style="font-size: 30px; float: left; " href="/">홈으로</a>
 
@@ -50,7 +50,7 @@
 </div>
 
 
-<div style="padding: 0px 0PX 50px 0px;font-size:30px;margin-right: 50px; margin-left: 50px;">
+<div style="padding: 0px 0PX 50px 0px;font-size:20px;margin-right: 50px; margin-left: 50px;">
     <table class="table">
         <tr style="background-color: antiquewhite;">
             <th>아이디</th>

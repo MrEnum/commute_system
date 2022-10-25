@@ -29,16 +29,21 @@ public class CommuteService {
         LocalDateTime now = LocalDateTime.now();
         String work = "출근";
         User user = userRepository.findUserByUsername(username);//user정보 조회
+        //매니저,사원 체크
+        if(user.getWork()==null){
+            return "관리자는 출퇴근할 수 없습니다.";
+        }
         //출퇴근상태체크
         if ((user.getWork().equals("출근"))) {
             return "이미 출근중이십니다.";
         }
+       
         //유저 상태값 수정
         setStart(user);//user출퇴근 상태값 변경
         //출퇴근 기록저장
         Commute commute = new Commute(username, user.getName(), now, work);
         commuteRepository.save(commute);
-        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return "현재시간 : " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Transactional
@@ -47,16 +52,21 @@ public class CommuteService {
         LocalDateTime now = LocalDateTime.now();
         String work = "퇴근";
         User user = userRepository.findUserByUsername(username);
+        //매니저,사원 체크
+        if(user.getWork()==null){
+            return "관리자는 출퇴근할 수 없습니다.";
+        }
         //출퇴근상태체크
         if ((user.getWork().equals("퇴근"))) {
             return "이미 퇴근중이십니다.";
         }
+       
         //유저 상태값 수정
         setFinish(user);
         //출퇴근 기록저장
         Commute commute = new Commute(username, user.getName(), now, work);
         commuteRepository.save(commute);
-        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return "현재시간 : " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     //출퇴근 상태값을 수정해주는 메서드

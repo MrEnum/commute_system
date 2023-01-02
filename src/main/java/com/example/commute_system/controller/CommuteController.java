@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CommuteController {
 
     //출근
     @PostMapping("/normal/start")
-    public String startWork(Authentication authentication) {
+    public String startWork(Authentication authentication) throws SQLException {
 
         return commuteService.start(authentication.getName());
     }

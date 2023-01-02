@@ -45,6 +45,10 @@ dependencies {
 //    JSP hot reload 설정하기 (재시동 x)
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    //jsoup
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+
+
 
 }
 

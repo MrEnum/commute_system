@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="clock.css"/>
-
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -82,7 +83,7 @@
     </div>
 
     <div id="header-title-login-user">
-        <span th:text="${username}"></span> 님
+        <span> ${username} </span> 님
     </div>
 </div>
 

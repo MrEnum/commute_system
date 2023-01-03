@@ -81,8 +81,8 @@
         </div>
     </div>
 
-    <div>
-        님
+    <div id="header-title-login-user">
+        <span th:text="${username}"></span> 님
     </div>
 </div>
 

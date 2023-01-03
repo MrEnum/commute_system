@@ -1,7 +1,6 @@
 package com.example.commute_system.service;
 
 
-import com.example.commute_system.dao.CommuteDAO;
 import com.example.commute_system.domain.Commute;
 import com.example.commute_system.domain.User;
 import com.example.commute_system.repository.CommuteRepository;
@@ -23,8 +22,6 @@ public class CommuteService {
     private final CommuteRepository commuteRepository;
     private final UserRepository userRepository;
 
-    private CommuteDAO commuteDAO;
-
 
     //
     // private final String localDateTimeNow = localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -32,6 +29,7 @@ public class CommuteService {
     @Transactional
     //출근 메서드
     public String start(String username) throws SQLException {
+        System.out.println(username);
         LocalDateTime now = LocalDateTime.now();
         String work = "출근";
         User user = userRepository.findUserByUsername(username);//user정보 조회
@@ -42,11 +40,12 @@ public class CommuteService {
         //출퇴근상태체크
         if ((user.getWork().equals("출근"))) {
             //퇴근 버튼을 안눌렀을 시 퇴근시간 6시로 퇴근
-            if (!(checkTime(username) == true)) {
+            if (checkTime(username) == -1) {
                 LocalDateTime localDateTime = LocalDateTime.of(now.getYear(), now.getMonth(), (now.getDayOfMonth() - 1), 18, 0);
                 Commute commute = new Commute(username, user.getName(), localDateTime, "퇴근");
                 commuteRepository.save(commute);
             } else {
+                System.out.println("이미 출근중이십니다.");
                 return "이미 출근중이십니다.";
             }
         }
@@ -120,18 +119,21 @@ public class CommuteService {
     }
 
     //마지막 시간 값이 어제였는지 확인
-    public boolean checkTime(String username) throws SQLException {
+    @Transactional
+    public int checkTime(String username) {
         //마지막 시간
-        int lastTime = commuteDAO.getLastTime(username).getDayOfMonth();
+        int lastTime = commuteRepository.findFirstByUsernameOrderByLocalDateTimeNowDesc(username).getLocalDateTimeNow().getDayOfMonth();
         //현재시간
         int nowDate = LocalDateTime.now().getDayOfMonth();
         if (lastTime == nowDate) {
-            return true;
+            return 0;
         } else {
-            return false;
+            return -1;
         }
 
     }
+
+
 
 
 }

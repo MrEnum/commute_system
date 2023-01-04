@@ -21,7 +21,6 @@ public class CommuteService {
     private final UserRepository userRepository;
 
 
-
     @Transactional
     //출근 메서드
     public String start(String username) throws SQLException {
@@ -46,8 +45,8 @@ public class CommuteService {
             }
         }
         //일 체크해서 totaldate 추가
-        if(checkTime(username) == -1) {
-         user.setTotaldate();
+        if (checkTime(username) == -1) {
+            user.setTotaldate();
         }
 
         //유저 상태값 수정, 총 일 수 값++
@@ -111,7 +110,12 @@ public class CommuteService {
     @Transactional
     public int checkTime(String username) {
         //마지막 시간
-        int lastTime = commuteRepository.findFirstByUsernameOrderByLocalDateTimeNowDesc(username).getLocalDateTimeNow().getDayOfMonth();
+        int lastTime;
+        if (commuteRepository.findFirstByUsernameOrderByLocalDateTimeNowDesc(username) == null) {
+            lastTime = 0;
+        } else {
+            lastTime = commuteRepository.findFirstByUsernameOrderByLocalDateTimeNowDesc(username).getLocalDateTimeNow().getDayOfMonth();
+        }
         //현재시간
         int nowDate = LocalDateTime.now().getDayOfMonth();
         System.out.println("lastDate : " + lastTime + "  nowDate : " + nowDate);
@@ -122,8 +126,6 @@ public class CommuteService {
         }
 
     }
-
-
 
 
 }

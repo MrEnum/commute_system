@@ -5,13 +5,11 @@ import com.example.commute_system.domain.Commute;
 import com.example.commute_system.domain.User;
 import com.example.commute_system.repository.CommuteRepository;
 import com.example.commute_system.repository.UserRepository;
-import com.sun.imageio.plugins.tiff.TIFFMetadataFormat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -108,17 +106,6 @@ public class CommuteService {
         }
     }
 
-    //총시간 카운트
-    @Transactional
-    public void totalCount(User user) {
-
-        //마지막 id값의 시간 가져오기
-
-        //현재시간 빼기
-
-        //totalTime에 추가
-
-    }
 
     //마지막 시간 값이 어제였는지 확인
     @Transactional

@@ -39,11 +39,9 @@ public class User {
     private int totaldate = 0;
 
 
-
     public void setWork(String work) {
         this.work = work;
     }
-    public void setTotaldate(){
-        this.totaldate++;
-    }
+
+    public void setTotaldate() { this.totaldate++;}
 }

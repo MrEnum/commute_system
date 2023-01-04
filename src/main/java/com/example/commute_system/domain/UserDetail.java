@@ -13,10 +13,13 @@ public class UserDetail implements UserDetails {
     private String password;
     private String auth;
 
+    private int totaldate;
+
     public UserDetail(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.auth = "ROLE_" + user.getRole();
+        this.totaldate = user.getTotaldate();
     }
 
     @Override
@@ -33,6 +36,8 @@ public class UserDetail implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    public int getTotaldate(){ return this.totaldate; }
 
     @Override
     public boolean isAccountNonExpired() {

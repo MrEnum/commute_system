@@ -23,8 +23,6 @@ public class CommuteService {
     private final UserRepository userRepository;
 
 
-    //
-    // private final String localDateTimeNow = localDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     @Transactional
     //출근 메서드
@@ -49,9 +47,13 @@ public class CommuteService {
                 return "이미 출근중이십니다.";
             }
         }
+        //일 체크해서 totaldate 추가
+        if(checkTime(username) == -1) {
+         user.setTotaldate();
+        }
 
-        //유저 상태값 수정
-        setStart(user);//user출퇴근 상태값 변경
+        //유저 상태값 수정, 총 일 수 값++
+        setStart(user);
         //출퇴근 기록저장
         Commute commute = new Commute(username, user.getName(), now, work);
         commuteRepository.save(commute);
@@ -125,6 +127,7 @@ public class CommuteService {
         int lastTime = commuteRepository.findFirstByUsernameOrderByLocalDateTimeNowDesc(username).getLocalDateTimeNow().getDayOfMonth();
         //현재시간
         int nowDate = LocalDateTime.now().getDayOfMonth();
+        System.out.println("lastDate : " + lastTime + "  nowDate : " + nowDate);
         if (lastTime == nowDate) {
             return 0;
         } else {

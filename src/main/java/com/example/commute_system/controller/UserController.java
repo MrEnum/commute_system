@@ -59,6 +59,7 @@ public class UserController {
             //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
             UserDetail userDetail = (UserDetail) authentication.getPrincipal();  //userDetail 객체를 가져옴
             model.addAttribute("username", userDetail.getUsername());      //유저 아이디
+            model.addAttribute("totaldate", userDetail.getTotaldate());      //유저 아이디
             System.out.println("보냈습니다." + userDetail.getUsername());
             return "index";
         }

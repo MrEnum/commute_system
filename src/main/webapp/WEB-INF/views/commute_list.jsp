@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<h1>■ SelectBox를 이용한 캘린더</h1>
+<h1></h1>
 <hr/>
 <!-- 년( Year )은 자동으로 생성시 너무 많이 늘어날 수 있어서 -->
 <!-- 월( Month )은 01 ~ 12라는 고정값을 알고 있기에 직접 값을 지정 -->
@@ -189,12 +189,10 @@
             );
             endLastDate = new Date(endFirstDate.getFullYear(), endFirstDate.getMonth(), 1);  // @param 다음달의 첫째날을 지정
             endLastDate.setDate(0);    // @param 다음달에서 하루를 빼서 원하는 월의 마지막 날로 맞춤
-
         }
 
 
         // @param 년도( Year ) - 선택
-
         for (let year = 0; stdDays.querySelector("select:nth-child(1)").length > year; year++) {
             if (stdDays.querySelector("select:nth-child(1)").options[year].value == stdFirstDate.getFullYear()) {
                 stdDays.querySelector("select:nth-child(1)").options[year].selected = true;
@@ -205,7 +203,6 @@
         }
 
         // @param 월( Month ) - 선택
-
         for (let month = 0; stdDays.querySelector("select:nth-child(2)").length > month; month++) {
             if (stdDays.querySelector("select:nth-child(2)").options[month].value == stdFirstDate.getMonth()) {
                 stdDays.querySelector("select:nth-child(2)").options[month].selected = true;
@@ -218,7 +215,7 @@
 
         // @param 일( Day ) - 생성 및 선택
         // @details - 날짜는 매월 마지막일이 다르게 끝나기 때문에 직접 생성하고,
-        //                선택한 날( 기본값 시작일 - 01일, 종료일은 - 말일 )을 자동으로 selected 한다.
+        // 선택한 날( 기본값 시작일 - 01일, 종료일은 - 말일 )을 자동으로 selected 한다.
         for (let date = 1; stdLastDate.getDate() >= date; date++) {
             if (stdFirstDate.getDate() == date) {
                 stdDays.querySelector("select:nth-child(3)").innerHTML
@@ -251,19 +248,17 @@
         const searchDays = cal.parentNode;
         const checkDate = searchDays.querySelector("select:nth-child(3)").value;
 
-
         // @param 다음달의 첫째날을 지정
         let lastDate = new Date(
             searchDays.querySelector("select:nth-child(1)").value
             , searchDays.querySelector("select:nth-child(2)").value
             , 1
         );
-        lastDate.setDate(0);    // @param 하루를 뺌
 
+        lastDate.setDate(0);    // @param 하루를 뺌
 
         // @param 일정보 초기화
         searchDays.querySelector("select:nth-child(3)").innerHTML = "";
-
 
         // @param 일정보 재삽입
         for (let date = 1; lastDate.getDate() >= date; date++) {
@@ -275,7 +270,6 @@
                     += "<option value='" + date + "'>" + autoLeftPad(date, 2) + "</option>";
             }
         }
-
 
         // @param 일정보 예외처리 선택되어있는 마지막 날이 바꾼 월의 날보다 큰경우의 예외처리
         if (checkDate > lastDate.getDate()) {
@@ -289,7 +283,6 @@
      * @param   num     앞에 0을 붙일 숫자 값
      * @param   digit   자릿수를 지정
      */
-
     function autoLeftPad(num, digit) {
         if (String(num).length < digit) {
             num = new Array(digit - String(num).length + 1).join("0") + num;
@@ -301,13 +294,11 @@
      * @brief   GET으로 넘어오는 값의 존재 여부를 체크
      */
     function nullPointerException(worth) {
-
         if (
             worth == ""
             || worth == null
             || worth == undefined
-            || (worth != null && typeof worth == "object" && !Object.keys(worth).length == "")
-        ) {
+            || (worth != null && typeof worth == "object" && !Object.keys(worth).length == "")) {
             return false;
         } else {
             return true;
@@ -316,35 +307,22 @@
 
 
     /**
-
      * @brief   GET방식으로 전달된 값을 추출
-
      * @param   param     추출할 key의 명칭
-
      */
 
     var getParameter = function (param) {
-
         let returnValue;
-
         let url = location.href;
-
         let parameters = (url.slice(url.indexOf("?") + 1, url.length)).split("&");
 
         for (let i = 0; i < parameters.length; i++) {
-
             let varName = parameters[i].split("=")[0];
-
             if (varName.toUpperCase() == param.toUpperCase()) {
-
                 returnValue = parameters[i].split("=")[1];
-
                 return decodeURIComponent(returnValue);
-
             }
-
         }
-
     };
 </script>
 

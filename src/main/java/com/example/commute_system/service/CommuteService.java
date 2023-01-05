@@ -6,6 +6,7 @@ import com.example.commute_system.domain.User;
 import com.example.commute_system.repository.CommuteRepository;
 import com.example.commute_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -99,9 +100,9 @@ public class CommuteService {
         User user = userRepository.findUserByUsername(username);
         //일반 사원일 경우
         if (user.getRole().equals("NORMAL")) {
-            return commuteRepository.findAllByUsername(username);
+            return commuteRepository.findAllByUsernameOrderByIdDesc(username);
         } else {
-            return commuteRepository.findAll();
+            return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         }
     }
 

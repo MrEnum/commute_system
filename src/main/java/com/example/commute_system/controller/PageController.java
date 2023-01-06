@@ -31,7 +31,7 @@ public class PageController {
         List<Commute> list = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
         model.addAttribute("list", list);
         System.out.println("start : " + startDate + ", end : " + endDate);
-        System.out.println("컨트롤러 타집니다!");
+
 
         return "commute_list";
     }

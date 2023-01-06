@@ -45,8 +45,9 @@
 <!-- 일( Day )은 마지막 일이 항상 변하기 때문에 자동 생성 한다. -->
 <div>
         <span>
+
             시작일 :
-            <select onChange="changeConditionPeriod(this);">
+            <select onChange="changeConditionPeriod(this);" id="startYear">
                 <option value="2018">2018</option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
@@ -56,8 +57,10 @@
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
             </select>
+
             년
-            <select onChange="changeConditionPeriod(this);">
+
+            <select onChange="changeConditionPeriod(this);" id="startMonth">
                 <option value="1">01</option>
                 <option value="2">02</option>
                 <option value="3">03</option>
@@ -71,14 +74,17 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
             </select>
+
             월
-            <select class="choiceDay"></select>
+
+            <select class="choiceDay" id="startDay"></select>
+
             일
         </span>
     ~
     <span>
             종료일
-            <select onChange="changeConditionPeriod(this);">
+            <select onChange="changeConditionPeriod(this);" id="endYear">
                 <option value="2018">2018</option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
@@ -89,7 +95,7 @@
                 <option value="2025">2025</option>
             </select>
             년
-            <select onChange="changeConditionPeriod(this);">
+            <select onChange="changeConditionPeriod(this);" id="endMonth">
                 <option value="1">01</option>
                 <option value="2">02</option>
                 <option value="3">03</option>
@@ -104,10 +110,10 @@
                 <option value="12">12</option>
             </select>
             월
-            <select class="choiceDay"></select>
+            <select class="choiceDay" id="endDay"></select>
            일
         </span>
-
+    <button onclick="getCommuteListByDate()">검색</button>
 </div>
 <%--    홈으로--%>
 <a style="font-size: 30px; float: left; " href="/">홈으로</a>
@@ -237,6 +243,32 @@
             }
         }
     });
+
+    function getCommuteListByDate() {
+        console.log("실행되긴함");
+        $("#table1").empty();
+        var startYear = $('#startYear option:selected').val();
+        var startMonth = $('#startMonth option:selected').val();
+        var startDay = $('#startDay option:selected').val();
+        var endYear = $('#endYear option:selected').val();
+        var endMonth = $('#endMonth option:selected').val();
+        var endDay = $('#endDay option:selected').val();
+
+        let startDate = new Date(startYear,startMonth, startDay);
+        let endDate = new Date(endYear,endMonth, endDay);
+
+        $.ajax({
+                    type: 'GET',
+                    async: 'false', //비동기, false값이 기본이다.
+                    url: '/commute_list/detail',
+                    data: (startDate, endDate),
+                    contentType: "application/json",
+                    success: function () {
+                    },
+                });
+
+    }
+
 
     /**
      * @brief   시작일( 년, 월 ), 종료일 ( 년, 월 )의 값이 변경된 경우 실행

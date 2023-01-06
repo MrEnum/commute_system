@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,6 +23,15 @@ public class PageController {
     public String commuteList(Model model, Authentication authentication) {
         List<Commute> list = commuteService.getCommuteList(authentication.getName());
         model.addAttribute("list", list);
+
+        return "commute_list";
+    }
+    @GetMapping("/commute_list/detail")
+    public String commuteListDetail(Model model, Authentication authentication , Date startDate, Date endDate) {
+        List<Commute> list = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
+        model.addAttribute("list", list);
+        System.out.println("start : " + startDate + ", end : " + endDate);
+        System.out.println("컨트롤러 타집니다!");
 
         return "commute_list";
     }

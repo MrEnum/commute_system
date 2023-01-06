@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -101,6 +102,16 @@ public class CommuteService {
         //일반 사원일 경우
         if (user.getRole().equals("NORMAL")) {
             return commuteRepository.findAllByUsernameOrderByIdDesc(username);
+        }else{
+            return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        }
+    }
+    @Transactional
+    public List<Commute> getCommuteListDetail(String username, Date startDate, Date endDate) {
+        User user = userRepository.findUserByUsername(username);
+        //일반 사원일 경우
+        if (user.getRole().equals("NORMAL")) {
+            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username,startDate, endDate);
         } else {
             return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         }

@@ -34,6 +34,18 @@
             padding: 0;
             margin: 0;
         }
+
+        .commute-start {
+            background-color: blue;
+            color: white;
+
+        }
+
+        .commute-end {
+            background-color: red;
+            color: white;
+
+        }
     </style>
 </head>
 
@@ -44,8 +56,8 @@
 <!-- 월( Month )은 01 ~ 12라는 고정값을 알고 있기에 직접 값을 지정 -->
 <!-- 일( Day )은 마지막 일이 항상 변하기 때문에 자동 생성 한다. -->
 <div>
-    <form action="/commute_list" method="get">
-        <span>
+    <%--    <form action="/commute_list" method="get">--%>
+    <span>
             시작일 :
             <select onChange="changeConditionPeriod(this);" id="startYear">
                 <option value="2018">2018</option>
@@ -108,9 +120,9 @@
             <select class="choiceDay" id="endDay"></select>
            일
         </span>
-        <input type="submit" value="submit검색">
+    <%--        <input type="submit" value="submit검색">--%>
     </form>
-<%--    <button onclick="getCommuteListByDate()">검색</button>--%>
+    <button onclick="getCommuteListByDate()">검색</button>
 </div>
 <%--    홈으로--%>
 <a style="font-size: 30px; float: left; " href="/">홈으로</a>
@@ -152,10 +164,18 @@
             </tr>
         </c:forEach>
         </tbody>
-            </form>
+
     </table>
 </div>
+<%--<!-- 그렇지 않다면 실행할 로직 -->--%>
+<%--<td style="background-color: red; color: white;">${listDetail.work}</td>--%>
 
+<%--<td>${listDetail.username}</td>--%>
+<%--<td>${listDetail.name}</td>--%>
+<%--<!-- Result값이 있다면 실행할 로직 -->--%>
+<%--<td style="background-color: blue; color : white">${listDetail.work}</td>--%>
+<%--<td>${listDetail.localDateTimeNow}</td>--%>
+<%--</tr>--%>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         const stdDays = document.querySelector("span:nth-child(1)");     // @param 시작일 영역지정
@@ -255,41 +275,58 @@
         let startDate = new Date(startYear, startMonth - 1, startDay);
         let endDate = new Date(endYear, endMonth, endDay);
 
-        let tempHtml = ` <c:forEach var="list" items="${listDetail}">
-            <td>${listDetail.username}</td>
-            <td>${listDetail.name}</td>
-            <c:choose>
-                <c:when test="${listDetail.work eq '출근' }">
-                    <!-- Result값이 있다면 실행할 로직 -->
-                    <td style="background-color: blue; color : white">${listDetail.work}</td>
-                </c:when>
-                <c:otherwise>
-                    <!-- 그렇지 않다면 실행할 로직 -->
-                    <td style="background-color: red; color: white;">${listDetail.work}</td>
 
-                </c:otherwise>
-            </c:choose>
-            <td>${listDetail.localDateTimeNow}</td>
-            </tr>
-        </c:forEach>`;
-
-
-        $("#table1").empty();
-        $("#table1").append(tempHtml);
         $.ajax({
             type: 'GET',
             async: 'false', //비동기, false값이 기본이다.
-            url: '/commute_list',
+            url: '/commute_list/detail',
             data: {
                 "startDate": startDate,
                 "endDate": endDate
             },
-            contentType: "application/json",
-            success: function () {
-
+            contentType: "application/json; charset=utf-8;",
+            success: function (response) {
+                if (response) {
+                    alert("완료");
+                } else {
+                    alert("전송된 값 없음");
+                }
+                $("#table1").empty();
+                console.log("일단 들어옴");
+                for (let i = 0; i < response.length; i++) {
+                    let listDetail = response[i];
+                    let tempHtml = addHTML(listDetail, response[i].work);
+                    $('#table1').append(tempHtml);
+                    console.log(response[i].localDateTimeNow + " : " + i);
+                }
                 console.log("ajax성공!");
             },
+            error: function () {
+                alert("에러 발생");
+            }
         });
+
+    }
+
+    function addHTML(listDetail, work) {
+        if (work === "출근") {
+            console.log("출근용~");
+            return `<td>${listDetail.username}</td>
+            <td>${listDetail.name}</td>
+                    <!-- Result값이 있다면 실행할 로직 -->
+                    <td class="commute-start">${listDetail.work}</td>
+            <td>${listDetail.localDateTimeNow}</td>
+            </tr>`
+        } else {
+            console.log("퇴근용~");
+            return `<td>${listDetail.username}</td>
+            <td>${listDetail.name}</td>
+                    <!-- Result값이 있다면 실행할 로직 -->
+                    <td class="commute-end">${listDetail.work}</td>
+            <td>${listDetail.localDateTimeNow}</td>
+            </tr>`
+        }
+
 
     }
 

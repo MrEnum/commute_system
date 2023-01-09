@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -24,19 +25,25 @@ public class PageController {
 
     @GetMapping("/commute_list")
     public String commuteList(Model model, Authentication authentication, Date startDate,  Date endDate) {
-        if(startDate == null) {
+
             List<Commute> list = commuteService.getCommuteList(authentication.getName());
             model.addAttribute("list", list);
-        }else{
-            System.out.println("start : " + startDate + ", end : " + endDate);
-            List<Commute> listDetail = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
-            model.addAttribute("listDetail", listDetail);
-            for (Commute lists:listDetail){
-                System.out.println(lists.getLocalDateTimeNow() + " : " +  lists.getId() );
-            }
-        }
+
 
         return "commute_list";
+    }
+
+    @ResponseBody
+    @GetMapping("/commute_list/detail")
+    public List<Commute> getListDetail(Authentication authentication, Date startDate,  Date endDate){
+        System.out.println("start : " + startDate + ", end : " + endDate);
+        List<Commute> listDetail = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
+
+//        model.addAttribute("listDetail", listDetail);
+        for (Commute lists:listDetail){
+            System.out.println(lists.getLocalDateTimeNow() + " : " +  lists.getId() );
+        }
+        return listDetail;
     }
 
     @GetMapping("/signup/failure")

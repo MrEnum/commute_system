@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -109,11 +110,18 @@ public class CommuteService {
     @Transactional
     public List<Commute> getCommuteListDetail(String username, Date startDate, Date endDate) {
         User user = userRepository.findUserByUsername(username);
+        //Date객체를 LocalDateTime객체로 변환
+        LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
+                .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
+                .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
+        LocalDateTime endDateTime = endDate.toInstant() // Date -> Instant
+                .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
+                .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
         //일반 사원일 경우
         if (user.getRole().equals("NORMAL")) {
-            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username,startDate, endDate);
+            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username,startDateTime, endDateTime);
         } else {
-            return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime);
         }
     }
 

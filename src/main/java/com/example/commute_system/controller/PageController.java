@@ -2,12 +2,15 @@ package com.example.commute_system.controller;
 
 import com.example.commute_system.domain.Commute;
 import com.example.commute_system.service.CommuteService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +30,11 @@ public class PageController {
         return "commute_list";
     }
     @GetMapping("/commute_list/detail")
-    public String commuteListDetail(Model model, Authentication authentication , Date startDate, Date endDate) {
+    public String commuteListDetail(Model model, Authentication authentication , Date startDate,  Date endDate) {
+        System.out.println("start : " + startDate + ", end : " + endDate);
         List<Commute> list = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
         model.addAttribute("list", list);
-        System.out.println("start : " + startDate + ", end : " + endDate);
+
 
 
         return "commute_list";

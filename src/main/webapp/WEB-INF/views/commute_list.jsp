@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <!-- 부트스트랩 css 사용 -->
-    <link rel="stylesheet" href="/css/bootstrap.css">
+
 
     <style>
         th {
@@ -254,6 +254,7 @@
         var endMonth = $('#endMonth option:selected').val();
         var endDay = $('#endDay option:selected').val();
 
+
         let startDate = new Date(startYear,startMonth, startDay);
         let endDate = new Date(endYear,endMonth, endDay);
 
@@ -261,9 +262,11 @@
                     type: 'GET',
                     async: 'false', //비동기, false값이 기본이다.
                     url: '/commute_list/detail',
-                    data: (startDate, endDate),
+                    data: {"startDate" : startDate,
+                            "endDate" : endDate },
                     contentType: "application/json",
                     success: function () {
+                        console.log("ajax성공!");
                     },
                 });
 

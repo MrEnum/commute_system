@@ -23,22 +23,22 @@ public class PageController {
 
 
     @GetMapping("/commute_list")
-    public String commuteList(Model model, Authentication authentication) {
-        List<Commute> list = commuteService.getCommuteList(authentication.getName());
-        model.addAttribute("list", list);
+    public String commuteList(Model model, Authentication authentication, Date startDate,  Date endDate) {
+        if(startDate == null) {
+            List<Commute> list = commuteService.getCommuteList(authentication.getName());
+            model.addAttribute("list", list);
+        }else{
+            System.out.println("start : " + startDate + ", end : " + endDate);
+            List<Commute> listDetail = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
+            model.addAttribute("listDetail", listDetail);
+            for (Commute lists:listDetail){
+                System.out.println(lists.getLocalDateTimeNow() + " : " +  lists.getId() );
+            }
+        }
 
         return "commute_list";
     }
-    @GetMapping("/commute_list/detail")
-    public String commuteListDetail(Model model, Authentication authentication , Date startDate,  Date endDate) {
-        System.out.println("start : " + startDate + ", end : " + endDate);
-        List<Commute> list = commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
-        model.addAttribute("list", list);
 
-
-
-        return "commute_list";
-    }
     @GetMapping("/signup/failure")
     public String failureSignup() {
 

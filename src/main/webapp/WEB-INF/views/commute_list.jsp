@@ -44,8 +44,8 @@
 <!-- 월( Month )은 01 ~ 12라는 고정값을 알고 있기에 직접 값을 지정 -->
 <!-- 일( Day )은 마지막 일이 항상 변하기 때문에 자동 생성 한다. -->
 <div>
+    <form action="/commute_list" method="get">
         <span>
-
             시작일 :
             <select onChange="changeConditionPeriod(this);" id="startYear">
                 <option value="2018">2018</option>
@@ -57,9 +57,7 @@
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
             </select>
-
             년
-
             <select onChange="changeConditionPeriod(this);" id="startMonth">
                 <option value="1">01</option>
                 <option value="2">02</option>
@@ -74,11 +72,8 @@
                 <option value="11">11</option>
                 <option value="12">12</option>
             </select>
-
             월
-
             <select class="choiceDay" id="startDay"></select>
-
             일
         </span>
     ~
@@ -113,7 +108,9 @@
             <select class="choiceDay" id="endDay"></select>
            일
         </span>
-    <button onclick="getCommuteListByDate()">검색</button>
+        <input type="submit" value="submit검색">
+    </form>
+<%--    <button onclick="getCommuteListByDate()">검색</button>--%>
 </div>
 <%--    홈으로--%>
 <a style="font-size: 30px; float: left; " href="/">홈으로</a>
@@ -134,7 +131,9 @@
             <th>출퇴근</th>
             <th>날짜시간</th>
         </tr>
+
         <tbody id="table1">
+
         <c:forEach var="list" items="${list}">
             <td>${list.username}</td>
             <td>${list.name}</td>
@@ -153,6 +152,7 @@
             </tr>
         </c:forEach>
         </tbody>
+            </form>
     </table>
 </div>
 
@@ -246,29 +246,50 @@
 
     function getCommuteListByDate() {
         console.log("실행되긴함");
-        $("#table1").empty();
         var startYear = $('#startYear option:selected').val();
         var startMonth = $('#startMonth option:selected').val();
         var startDay = $('#startDay option:selected').val();
         var endYear = $('#endYear option:selected').val();
         var endMonth = $('#endMonth option:selected').val();
         var endDay = $('#endDay option:selected').val();
+        let startDate = new Date(startYear, startMonth - 1, startDay);
+        let endDate = new Date(endYear, endMonth, endDay);
+
+        let tempHtml = ` <c:forEach var="list" items="${listDetail}">
+            <td>${listDetail.username}</td>
+            <td>${listDetail.name}</td>
+            <c:choose>
+                <c:when test="${listDetail.work eq '출근' }">
+                    <!-- Result값이 있다면 실행할 로직 -->
+                    <td style="background-color: blue; color : white">${listDetail.work}</td>
+                </c:when>
+                <c:otherwise>
+                    <!-- 그렇지 않다면 실행할 로직 -->
+                    <td style="background-color: red; color: white;">${listDetail.work}</td>
+
+                </c:otherwise>
+            </c:choose>
+            <td>${listDetail.localDateTimeNow}</td>
+            </tr>
+        </c:forEach>`;
 
 
-        let startDate = new Date(startYear,startMonth, startDay);
-        let endDate = new Date(endYear,endMonth, endDay);
-
+        $("#table1").empty();
+        $("#table1").append(tempHtml);
         $.ajax({
-                    type: 'GET',
-                    async: 'false', //비동기, false값이 기본이다.
-                    url: '/commute_list/detail',
-                    data: {"startDate" : startDate,
-                            "endDate" : endDate },
-                    contentType: "application/json",
-                    success: function () {
-                        console.log("ajax성공!");
-                    },
-                });
+            type: 'GET',
+            async: 'false', //비동기, false값이 기본이다.
+            url: '/commute_list',
+            data: {
+                "startDate": startDate,
+                "endDate": endDate
+            },
+            contentType: "application/json",
+            success: function () {
+
+                console.log("ajax성공!");
+            },
+        });
 
     }
 

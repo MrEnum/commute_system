@@ -167,15 +167,7 @@
 
     </table>
 </div>
-<%--<!-- 그렇지 않다면 실행할 로직 -->--%>
-<%--<td style="background-color: red; color: white;">${listDetail.work}</td>--%>
 
-<%--<td>${listDetail.username}</td>--%>
-<%--<td>${listDetail.name}</td>--%>
-<%--<!-- Result값이 있다면 실행할 로직 -->--%>
-<%--<td style="background-color: blue; color : white">${listDetail.work}</td>--%>
-<%--<td>${listDetail.localDateTimeNow}</td>--%>
-<%--</tr>--%>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         const stdDays = document.querySelector("span:nth-child(1)");     // @param 시작일 영역지정
@@ -311,20 +303,27 @@
     function addHTML(listDetail, work) {
         if (work === "출근") {
             console.log("출근용~");
-            return `<td>${listDetail.username}</td>
-            <td>${listDetail.name}</td>
-                    <!-- Result값이 있다면 실행할 로직 -->
-                    <td class="commute-start">${listDetail.work}</td>
-            <td>${listDetail.localDateTimeNow}</td>
-            </tr>`
+            let html="";
+            html += '<tr>';
+            html += '<td>'+listDetail.username+'</td>';
+            html += '<td>'+listDetail.name +'</td>';
+            html += '<td class="commute-start">'+listDetail.work+'</td>';
+            html += '<td>'+listDetail.localDateTimeNow+'</td>';
+            html += '</tr>';
+            return html;
+
+
         } else {
             console.log("퇴근용~");
-            return `<td>${listDetail.username}</td>
-            <td>${listDetail.name}</td>
-                    <!-- Result값이 있다면 실행할 로직 -->
-                    <td class="commute-end">${listDetail.work}</td>
-            <td>${listDetail.localDateTimeNow}</td>
-            </tr>`
+
+            let html="";
+            html += '<tr >';
+            html += '<td>'+listDetail.username+'</td>';
+            html += '<td>'+listDetail.name +'</td>';
+            html += '<td class="commute-end">'+listDetail.work+'</td>';
+            html += '<td>'+listDetail.localDateTimeNow+'</td>';
+            html += '</tr>';
+            return html;
         }
 
 

@@ -1,6 +1,5 @@
 package com.example.commute_system.domain;
 
-import com.example.commute_system.service.CommuteService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

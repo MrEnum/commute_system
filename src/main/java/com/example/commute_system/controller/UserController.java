@@ -3,7 +3,6 @@ package com.example.commute_system.controller;
 import com.example.commute_system.domain.User;
 import com.example.commute_system.domain.UserDetail;
 import com.example.commute_system.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

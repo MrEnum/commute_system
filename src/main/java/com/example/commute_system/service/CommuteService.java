@@ -47,13 +47,10 @@ public class CommuteService {
                 return "이미 출근중이십니다.";
             }
         }
-        //일 체크해서 totaldate 추가
-        if (checkTime(username) == -1) {
-            user.setTotaldate();
-        }
+
 
         //유저 상태값 수정, 총 일 수 값++
-        setStart(user);
+        setStart(user, username);
         //출퇴근 기록저장
         Commute commute = new Commute(username, user.getName(), now, work);
         commuteRepository.save(commute);
@@ -85,8 +82,13 @@ public class CommuteService {
     }
 
     //출퇴근 상태값을 수정해주는 메서드
-    public String setStart(User user) {
+    public String setStart(User user, String username) {
         user.setWork("출근");
+        //일 체크해서 totaldate 추가
+        if (checkTime(username) == -1) {
+            System.out.println("체크 중");
+            user.setTotaldate();
+        }
         userRepository.save(user);
         return "출근 완료";
     }

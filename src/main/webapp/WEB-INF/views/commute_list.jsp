@@ -55,29 +55,25 @@
 
 <div>
     <p>
-        <label> 시작 </label>
+        <label> 날짜 </label>
         <input type="text" id="datepicker_init_day" class="start-date" placeholder="초기날짜">
-    </p>
-    <p>
-        <label> 끝 </label>
+        ~
         <input type="text" id="datepicker_special_day" class="end-date" placeholder="특정날짜">
+
     </p>
-    <button onclick="getCommuteListByDate()">검색</button>
 </div>
 <c:choose>
     <c:when test="${role eq 'ROLE_MANAGER'}">
         <div>
             <p>
                 <label> 이름 검색 </label>
-                <input type="text" id="name-search" class="name" placeholder="이름">
+                <input type="text" id="name-search" class="real-name" placeholder="이름">
+                <button onclick="getCommuteListByName()">검색</button>
             </p>
-
-            <button onclick="getCommuteListByName()">검색</button>
-
         </div>
     </c:when>
     <c:otherwise>
-
+        <button onclick="getCommuteListByDate()">검색</button>
     </c:otherwise>
 </c:choose>
 
@@ -124,6 +120,9 @@
 </div>
 
 <script type="text/javascript">
+    // $("#datepicker").datepicker({
+    //     language: 'ko'
+    // });
 
     //비동기로 테이블 값 가져오기
     function getCommuteListByDate() {
@@ -190,30 +189,39 @@
     // datepicker
     $(function () {
         $("#datepicker").datepicker();
-        $("#datepicker_init_day").datepicker();
-        $("#datepicker_init_day").datepicker('setDate', new Date);
+        $("#datepicker_init_day").datepicker({dateFormat: "yymmdd"});
+        $("#datepicker_init_day").datepicker('setDate', '20220101');
 
-        $("#datepicker_special_day").datepicker();
-        $("#datepicker_special_day").datepicker('setDate', '2018-12-25');
+        $("#datepicker_special_day").datepicker({dateFormat: "yymmdd"});
+        $("#datepicker_special_day").datepicker('setDate', new Date());
 
-        var today = new Date(); // 오늘날짜가 만들어진다.
-        today.setDate(today.getDate() + 3); // 3일을 더하기
-
-
-
-        $("#datepicker_add_day").datepicker();
-        $("#datepicker_add_day").datepicker('setDate', today);
     });
 
 
     function getCommuteListByName() {
-        let name = $(".name").val();
+        let name = $(".real-name").val();
+        console.log("실행되긴함 : " + name);
 
+        let startYear = $('.start-date').datepicker('getDate').getFullYear();
+        let startMonth = $('.start-date').datepicker('getDate').getMonth();
+        let startDay = $('.start-date').datepicker('getDate').getDate();
+
+        let endYear = $('.end-date').datepicker('getDate').getFullYear();
+        let endMonth = $('.end-date').datepicker('getDate').getMonth();
+        let endDay = $('.end-date').datepicker('getDate').getDate() + 1;
+
+
+        const startDate = new Date(startYear, startMonth, startDay);
+        const endDate = new Date(endYear, endMonth, endDay);
         $.ajax({
             type: 'GET',
             async: 'false', //비동기, false값이 기본이다.
             url: '/commute_list/userdetail',
-            data: {"otherUsername": name},
+            data: {
+                "otherUsername": name,
+                "startDate": startDate,
+                "endDate": endDate
+            },
             contentType: "application/json; charset=utf-8;",
             success: function (response) {
                 getList(response)
@@ -240,6 +248,7 @@
         }
         console.log("ajax성공!");
     }
+
 </script>
 
 </body>

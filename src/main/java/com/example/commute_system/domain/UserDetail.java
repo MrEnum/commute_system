@@ -13,6 +13,8 @@ public class UserDetail implements UserDetails {
     private String password;
     private String auth;
 
+    private String name;
+
     private int totaldate;
 
     public UserDetail(User user) {
@@ -20,6 +22,7 @@ public class UserDetail implements UserDetails {
         this.password = user.getPassword();
         this.auth = "ROLE_" + user.getRole();
         this.totaldate = user.getTotaldate();
+        this.name = user.getName();
     }
 
     @Override
@@ -37,6 +40,8 @@ public class UserDetail implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    public String getName(){return this.name;}
 
     public int getTotaldate() {
         return this.totaldate;

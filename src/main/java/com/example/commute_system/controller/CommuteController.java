@@ -43,21 +43,27 @@ public class CommuteController {
     }
 
 
-
     //출퇴근 기록 날짜 검색
     @ResponseBody
     @GetMapping("/commute_list/detail")
     public List<Commute> getListDetail(Authentication authentication, Date startDate, Date endDate) {
         log.info("날짜 검색 : " + startDate + " ~ " + endDate);
+        UserDetail userDetail = (UserDetail) authentication.getPrincipal();
 
-        return commuteService.getCommuteListDetail(authentication.getName(), startDate, endDate);
+        return commuteService.getCommuteListDetail(userDetail.getRole() ,userDetail.getName(), startDate, endDate);
     }
 
+    //유저검색
     @ResponseBody
     @GetMapping("/commute_list/userdetail")
-    public List<Commute> getListUserDetail(Authentication authentication, String otherUsername) {
+    public List<Commute> getListUserDetail(Authentication authentication, String otherUsername, Date startDate, Date endDate) {
         log.info("사원 검색 : " + otherUsername);
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
-        return commuteService.getCommuteListUserDetail(userDetail.getRole(), otherUsername);
+
+        if (otherUsername.equals("")) {
+            return commuteService.getCommuteListDetail(userDetail.getRole(), userDetail.getName(), startDate, endDate);
+        } else {
+            return commuteService.getCommuteListUserDetail(userDetail.getRole(), otherUsername, startDate, endDate);
+        }
     }
 }

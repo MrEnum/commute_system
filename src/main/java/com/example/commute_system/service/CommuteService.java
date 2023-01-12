@@ -112,19 +112,26 @@ public class CommuteService {
     
     //유저 검색
     @Transactional
-    public List<Commute> getCommuteListUserDetail(String role, String otherUsername) {
-        //일반 사원일 경우
+    public List<Commute> getCommuteListUserDetail(String role, String otherUsername, Date startDate, Date endDate) {
+
+        LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
+                .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
+                .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
+        LocalDateTime endDateTime = endDate.toInstant() // Date -> Instant
+                .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
+                .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
+
         if (role.equals("ROLE_MANAGER")) {
-            return commuteRepository.findAllByNameOrderByIdDesc(otherUsername);
+            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(otherUsername, startDateTime, endDateTime);
         } else {
             System.out.println("매니저가 아닙니다.");
-            return null;}
+            return null;
+        }
     }
 
     //날짜 검색
     @Transactional
-    public List<Commute> getCommuteListDetail(String username, Date startDate, Date endDate) {
-        User user = userRepository.findUserByUsername(username);
+    public List<Commute> getCommuteListDetail(String role, String name, Date startDate, Date endDate) {
         //Date객체를 LocalDateTime객체로 변환
         LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
@@ -134,8 +141,8 @@ public class CommuteService {
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
 
         //일반 사원일 경우
-        if (user.getRole().equals("NORMAL")) {
-            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username, startDateTime, endDateTime);
+        if (role.equals("ROLE_NORMAL")) {
+            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(name, startDateTime, endDateTime);
         } else {
             return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime);
         }

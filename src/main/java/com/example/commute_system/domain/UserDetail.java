@@ -27,9 +27,7 @@ public class UserDetail implements UserDetails {
         return Collections.singletonList(new SimpleGrantedAuthority(this.auth));
     }
 
-    public String getRole() {
-        return this.auth;
-    }
+
     @Override
     public String getPassword() {
         return this.password;
@@ -40,12 +38,16 @@ public class UserDetail implements UserDetails {
         return this.username;
     }
 
-    public int getTotaldate(){ return this.totaldate; }
+    public int getTotaldate() {
+        return this.totaldate;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
+    public String getRole() { return this.auth;}
 
     @Override
     public boolean isAccountNonLocked() {

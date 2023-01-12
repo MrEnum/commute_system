@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CommuteRepository extends JpaRepository<Commute,Integer> {
 
-    List<Commute> findAllByUsername(String username);
     List<Commute> findAllByUsernameOrderByIdDesc(String username);
 
     List<Commute> findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(String username, LocalDateTime start, LocalDateTime end);
@@ -17,4 +16,6 @@ public interface CommuteRepository extends JpaRepository<Commute,Integer> {
     Commute findFirstByUsernameOrderByLocalDateTimeNowDesc(String username);
 
     List<Commute> findAllByLocalDateTimeNowBetweenOrderByIdDesc(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Commute> findAllByNameOrderByIdDesc(String otherUsername);
 }

@@ -64,8 +64,23 @@
     </p>
     <button onclick="getCommuteListByDate()">검색</button>
 </div>
+<c:choose>
+    <c:when test="${role eq 'ROLE_MANAGER'}">
+        <div>
+            <p>
+                <label> 이름 검색 </label>
+                <input type="text" id="name-search" class="name" placeholder="이름">
+            </p>
 
-</div>
+            <button onclick="getCommuteListByName()">검색</button>
+
+        </div>
+    </c:when>
+    <c:otherwise>
+
+    </c:otherwise>
+</c:choose>
+
 <%--    홈으로--%>
 <a style="font-size: 30px; float: left; padding-left: 25%; " href="/">홈으로</a>
 
@@ -138,27 +153,15 @@
             },
             contentType: "application/json; charset=utf-8;",
             success: function (response) {
-                if (response) {
-                    alert("완료");
-                } else {
-                    alert("전송된 값 없음");
-                }
-                $("#table1").empty();
-                console.log("일단 들어옴");
-                for (let i = 0; i < response.length; i++) {
-                    let listDetail = response[i];
-                    let tempHtml = addHTML(listDetail, response[i].work);
-                    $('#table1').append(tempHtml);
-                    // console.log(response[i].localDateTimeNow + " : " + i);
-                }
-                console.log("ajax성공!");
+                getList(response);
             },
             error: function () {
                 alert("에러 발생");
             }
         });
     }
-    document.readyState().value().text().getDay
+
+
     //table뿌려주기
     function addHTML(listDetail, work) {
         if (work === "출근") {
@@ -194,10 +197,7 @@
         $("#datepicker_special_day").datepicker('setDate', '2018-12-25');
 
         var today = new Date(); // 오늘날짜가 만들어진다.
-        console.log('오늘 날짜  => ' + today);
         today.setDate(today.getDate() + 3); // 3일을 더하기
-        console.log('3일 후 날짜  => ' + today);
-
 
 
 
@@ -205,6 +205,41 @@
         $("#datepicker_add_day").datepicker('setDate', today);
     });
 
+
+    function getCommuteListByName() {
+        let name = $(".name").val();
+
+        $.ajax({
+            type: 'GET',
+            async: 'false', //비동기, false값이 기본이다.
+            url: '/commute_list/userdetail',
+            data: {"otherUsername": name},
+            contentType: "application/json; charset=utf-8;",
+            success: function (response) {
+                getList(response)
+            },
+            error: function () {
+                alert("에러 발생");
+            }
+        });
+    }
+
+    function getList(response) {
+        if (response) {
+            alert("완료");
+        } else {
+            alert("전송된 값 없음");
+        }
+        $("#table1").empty();
+        console.log("일단 들어옴");
+        for (let i = 0; i < response.length; i++) {
+            let listDetail = response[i];
+            let tempHtml = addHTML(listDetail, response[i].work);
+            $('#table1').append(tempHtml);
+            // console.log(response[i].localDateTimeNow + " : " + i);
+        }
+        console.log("ajax성공!");
+    }
 </script>
 
 </body>

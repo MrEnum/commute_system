@@ -98,16 +98,30 @@ public class CommuteService {
         return "퇴근 완료";
     }
 
+   
+    //기본 탐색
     @Transactional
-    public List<Commute> getCommuteList(String username) {
-        User user = userRepository.findUserByUsername(username);
+    public List<Commute> getCommuteList(String role, String username) {
         //일반 사원일 경우
-        if (user.getRole().equals("NORMAL")) {
+        if (role.equals("ROLE_NORMAL")) {
             return commuteRepository.findAllByUsernameOrderByIdDesc(username);
-        }else{
+        } else {
             return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         }
     }
+    
+    //유저 검색
+    @Transactional
+    public List<Commute> getCommuteListUserDetail(String role, String otherUsername) {
+        //일반 사원일 경우
+        if (role.equals("ROLE_MANAGER")) {
+            return commuteRepository.findAllByNameOrderByIdDesc(otherUsername);
+        } else {
+            System.out.println("매니저가 아닙니다.");
+            return null;}
+    }
+
+    //날짜 검색
     @Transactional
     public List<Commute> getCommuteListDetail(String username, Date startDate, Date endDate) {
         User user = userRepository.findUserByUsername(username);
@@ -118,9 +132,10 @@ public class CommuteService {
         LocalDateTime endDateTime = endDate.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
+
         //일반 사원일 경우
         if (user.getRole().equals("NORMAL")) {
-            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username,startDateTime, endDateTime);
+            return commuteRepository.findAllByUsernameAndLocalDateTimeNowBetweenOrderByIdDesc(username, startDateTime, endDateTime);
         } else {
             return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime);
         }

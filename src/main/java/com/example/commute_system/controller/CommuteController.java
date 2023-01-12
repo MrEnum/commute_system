@@ -4,12 +4,11 @@ import com.example.commute_system.domain.Commute;
 import com.example.commute_system.domain.UserDetail;
 import com.example.commute_system.service.CommuteService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -46,24 +45,33 @@ public class CommuteController {
     //출퇴근 기록 날짜 검색
     @ResponseBody
     @GetMapping("/commute_list/detail")
-    public List<Commute> getListDetail(Authentication authentication, Date startDate, Date endDate) {
+    public Page<Commute> getListDetail(Authentication authentication, Date startDate, Date endDate,
+                                       @RequestParam("page") int page,
+                                       @RequestParam("size") int size,
+                                       @RequestParam("psortBy") String sortBy,
+                                       @RequestParam("isAsc") boolean isAsc) {
         log.info("날짜 검색 : " + startDate + " ~ " + endDate);
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
-
-        return commuteService.getCommuteListDetail(userDetail.getRole() ,userDetail.getName(), startDate, endDate);
+        page = page - 1;
+        return commuteService.getCommuteListDetail(userDetail.getRole(), userDetail.getName(), startDate, endDate, page, size, sortBy, isAsc);
     }
 
     //유저검색
     @ResponseBody
     @GetMapping("/commute_list/userdetail")
-    public List<Commute> getListUserDetail(Authentication authentication, String otherUsername, Date startDate, Date endDate) {
+    public Page<Commute> getListUserDetail(Authentication authentication, String otherUsername, Date startDate, Date endDate,
+                                           @RequestParam("page") int page,
+                                           @RequestParam("size") int size,
+                                           @RequestParam("psortBy") String sortBy,
+                                           @RequestParam("isAsc") boolean isAsc) {
         log.info("사원 검색 : " + otherUsername);
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
-
+        page = page - 1;
         if (otherUsername.equals("")) {
-            return commuteService.getCommuteListDetail(userDetail.getRole(), userDetail.getName(), startDate, endDate);
+            return commuteService.getCommuteListDetail(userDetail.getRole(), userDetail.getName(), startDate, endDate, page, size, sortBy, isAsc);
         } else {
-            return commuteService.getCommuteListUserDetail(userDetail.getRole(), otherUsername, startDate, endDate);
+            return commuteService.getCommuteListUserDetail(userDetail.getRole(), otherUsername, startDate, endDate, startDate, endDate, page, size, sortBy, isAsc);
         }
     }
+
 }

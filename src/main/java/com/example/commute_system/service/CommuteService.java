@@ -6,6 +6,9 @@ import com.example.commute_system.domain.User;
 import com.example.commute_system.repository.CommuteRepository;
 import com.example.commute_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -112,7 +115,10 @@ public class CommuteService {
     
     //유저 검색
     @Transactional
-    public List<Commute> getCommuteListUserDetail(String role, String otherUsername, Date startDate, Date endDate) {
+    public Page<Commute> getCommuteListUserDetail(String role, String otherUsername, Date startDate, Date endDate, Date date, Date endDate1, int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);//pageable객체를 인스턴스화해준다.
 
         LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
@@ -122,7 +128,7 @@ public class CommuteService {
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
 
         if (role.equals("ROLE_MANAGER")) {
-            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(otherUsername, startDateTime, endDateTime);
+            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(otherUsername, startDateTime, endDateTime, pageable);
         } else {
             System.out.println("매니저가 아닙니다.");
             return null;
@@ -131,7 +137,12 @@ public class CommuteService {
 
     //날짜 검색
     @Transactional
-    public List<Commute> getCommuteListDetail(String role, String name, Date startDate, Date endDate) {
+    public Page<Commute> getCommuteListDetail(String role, String name, Date startDate, Date endDate, int page, int size, String sortBy, boolean isAsc) {
+
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);//pageable객체를 인스턴스화해준다.
+
         //Date객체를 LocalDateTime객체로 변환
         LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
@@ -142,9 +153,9 @@ public class CommuteService {
 
         //일반 사원일 경우
         if (role.equals("ROLE_NORMAL")) {
-            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(name, startDateTime, endDateTime);
+            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(name, startDateTime, endDateTime ,pageable);
         } else {
-            return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime);
+            return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime, pageable);
         }
     }
 

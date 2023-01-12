@@ -73,7 +73,7 @@
         </div>
     </c:when>
     <c:otherwise>
-        <button onclick="getCommuteListByDate()">검색</button>
+        <button onclick="getCommuteListByDate2()">검색</button>
     </c:otherwise>
 </c:choose>
 
@@ -119,46 +119,62 @@
     </table>
 </div>
 
+<div id="see-area">
+    <div class="pagination">
+        정렬:
+        <select id="sorting" onchange="getCommuteListByDate2()">
+            <option value="id">ID</option>
+            <option value="title">상품명</option>
+            <option value="lprice">최저가</option>
+        </select>
+        <input type="radio" name="isAsc" value="true" onchange="getCommuteListByDate2()" checked /> 오름차순
+        <input type="radio" name="isAsc" value="false" onchange="getCommuteListByDate2()" /> 내림차순
+    </div>
+    <div id="pagination" class="pagination"></div>
+    <ul id="product-container">
+    </ul>
+</div>
+
 <script type="text/javascript">
     // $("#datepicker").datepicker({
     //     language: 'ko'
     // });
 
-    //비동기로 테이블 값 가져오기
-    function getCommuteListByDate() {
-        console.log("실행되긴함");
-
-        let startYear = $('.start-date').datepicker('getDate').getFullYear();
-        let startMonth = $('.start-date').datepicker('getDate').getMonth();
-        let startDay = $('.start-date').datepicker('getDate').getDate();
-
-        let endYear = $('.end-date').datepicker('getDate').getFullYear();
-        let endMonth = $('.end-date').datepicker('getDate').getMonth();
-        let endDay = $('.end-date').datepicker('getDate').getDate() + 1;
-
-        let startdate
-
-        const startDate = new Date(startYear, startMonth, startDay);
-        const endDate = new Date(endYear, endMonth, endDay);
-        console.log(startDate + " ~ " + endDate);
-
-        $.ajax({
-            type: 'GET',
-            async: 'false', //비동기, false값이 기본이다.
-            url: '/commute_list/detail',
-            data: {
-                "startDate": startDate,
-                "endDate": endDate
-            },
-            contentType: "application/json; charset=utf-8;",
-            success: function (response) {
-                getList(response);
-            },
-            error: function () {
-                alert("에러 발생");
-            }
-        });
-    }
+    // //비동기로 테이블 값 가져오기
+    // function getCommuteListByDate() {
+    //     console.log("실행되긴함");
+    //
+    //     let startYear = $('.start-date').datepicker('getDate').getFullYear();
+    //     let startMonth = $('.start-date').datepicker('getDate').getMonth();
+    //     let startDay = $('.start-date').datepicker('getDate').getDate();
+    //
+    //     let endYear = $('.end-date').datepicker('getDate').getFullYear();
+    //     let endMonth = $('.end-date').datepicker('getDate').getMonth();
+    //     let endDay = $('.end-date').datepicker('getDate').getDate() + 1;
+    //
+    //     let startdate
+    //
+    //     const startDate = new Date(startYear, startMonth, startDay);
+    //     const endDate = new Date(endYear, endMonth, endDay);
+    //     console.log(startDate + " ~ " + endDate);
+    //
+    //     $.ajax({
+    //         type: 'GET',
+    //         async: 'false', //비동기, false값이 기본이다.
+    //         url: '/commute_list/detail',
+    //         data: {
+    //             "startDate": startDate,
+    //             "endDate": endDate
+    //         },
+    //         contentType: "application/json; charset=utf-8;",
+    //         success: function (response) {
+    //             getList(response);
+    //         },
+    //         error: function () {
+    //             alert("에러 발생");
+    //         }
+    //     });
+    // }
 
 
     //table뿌려주기
@@ -247,6 +263,58 @@
             // console.log(response[i].localDateTimeNow + " : " + i);
         }
         console.log("ajax성공!");
+    }
+
+    //페이징 적용
+    function getCommuteListByDate2() {
+
+        let startYear = $('.start-date').datepicker('getDate').getFullYear();
+        let startMonth = $('.start-date').datepicker('getDate').getMonth();
+        let startDay = $('.start-date').datepicker('getDate').getDate();
+
+        let endYear = $('.end-date').datepicker('getDate').getFullYear();
+        let endMonth = $('.end-date').datepicker('getDate').getMonth();
+        let endDay = $('.end-date').datepicker('getDate').getDate() + 1;
+
+
+        let startDate = new Date(startYear, startMonth, startDay);
+        let endDate = new Date(endYear, endMonth, endDay);
+
+        var sorting = $("#sorting option:selected").val();
+        var isAsc = $(':radio[name="isAsc"]:checked').val();
+        console.log(sorting, isAsc, startDate, endDate);
+
+        $('#table1').empty();
+        $('#table1').pagination({
+            dataSource: `/commute_list/detail?sortBy=${sorting}&isAsc=${isAsc}`,
+            locator: 'content',
+            alias: {
+                pageNumber: 'page',
+                pageSize: 'size'
+            },
+            totalNumberLocator: (response) => {
+                return response.totalElements;
+            },
+            pageSize: 10,
+            showPrevious: true,
+            showNext: true,
+            ajax: {
+                beforeSend: function() {
+                    $('#table1').html('기록 불러오는 중...');
+                }
+            },
+            callback: function(data, pagination) {
+                $('#table1').empty();
+                for (let i = 0; i < data.length; i++) {
+                    let listDetail = data[i];
+                    let tempHtml = addHTML(listDetail, data[i].work);
+                    $('#table1').append(tempHtml);
+                }
+            }
+        });
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 </script>

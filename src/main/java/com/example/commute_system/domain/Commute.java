@@ -38,12 +38,7 @@ public class Commute {
     @Column(name="LOCALDATETIMENOW", nullable = false)
     private LocalDateTime localDateTimeNow;
 
-    //    Commute(String name, LocalDateTime localDateTime, User user, int work){
-//        this.name = user.getName();
-//        this.localDateTime = localDateTime;
-//        this.user = user;
-//        this.work = work;
-//    }
+
     public Commute(String username, String name, LocalDateTime localDateTimeNow, String work) {
         this.username = username; // 나중엔 바꿔줘야함
         this.name = name;

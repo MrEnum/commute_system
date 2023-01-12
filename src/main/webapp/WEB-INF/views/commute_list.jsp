@@ -122,6 +122,8 @@
         let endMonth = $('.end-date').datepicker('getDate').getMonth();
         let endDay = $('.end-date').datepicker('getDate').getDate() + 1;
 
+        let startdate
+
         const startDate = new Date(startYear, startMonth, startDay);
         const endDate = new Date(endYear, endMonth, endDay);
         console.log(startDate + " ~ " + endDate);
@@ -156,7 +158,7 @@
             }
         });
     }
-
+    document.readyState().value().text().getDay
     //table뿌려주기
     function addHTML(listDetail, work) {
         if (work === "출근") {
@@ -195,6 +197,9 @@
         console.log('오늘 날짜  => ' + today);
         today.setDate(today.getDate() + 3); // 3일을 더하기
         console.log('3일 후 날짜  => ' + today);
+
+
+
 
         $("#datepicker_add_day").datepicker();
         $("#datepicker_add_day").datepicker('setDate', today);

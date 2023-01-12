@@ -48,7 +48,6 @@ public class CommuteService {
             }
         }
 
-
         //유저 상태값 수정, 총 일 수 값++
         setStart(user, username);
         //출퇴근 기록저장
@@ -149,6 +148,7 @@ public class CommuteService {
 
     }
 
+    //출퇴근 유저 검색
 
 }
 

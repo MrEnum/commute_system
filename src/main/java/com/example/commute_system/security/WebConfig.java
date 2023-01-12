@@ -14,18 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
-    /**
-     * 규칙 설정
-     *
-     * @param http
-     * @throws Exception
-     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/index","/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
                 .antMatchers("/manager/signup").hasRole("MANAGER")
-
                 .and()
                 .formLogin()
                 .permitAll()
@@ -51,12 +45,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 //      - formLogin() : spring security에서 제공하는 login form을 이용한다는 뜻. 로그인 성공시 '/'로 리다이렉트
 //      - csrf() : 웹 사이트의 취약점을 이용한 의도치 않은 요청을 통한 공격을 의미한다. 이 기능을 disable한 상태이다.
 
-    /**
-     * 로그인 인증 처리 메소드
-     *
-     * @param auth
-     * @throws Exception
-     */
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

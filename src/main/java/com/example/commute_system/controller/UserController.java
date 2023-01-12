@@ -18,24 +18,15 @@ public class UserController {
     private final UserService userService;
 
 
-    /**
-     * 회원가입 폼
-     *
-     * @return
-     */
 
+    //회원가입 페이지 이동
     @GetMapping("/manager/signup")
     public String signUpForm() {
         return "signup";
     }
 
-    /**
-     * 회원가입 진행
-     *
-     * @param user
-     * @return
-     */
 
+    //회원가입 진행
     @PostMapping("/manager/signup")
     public String signup(User user) {
         user.setRole(user.getRole());
@@ -43,13 +34,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    /**
-     * 유저 페이지
-     *
-     * @param model
-     * @param authentication
-     * @return
-     */
+    //로그인 인증
     @GetMapping("/")
     public String loginAccess(Model model, Authentication authentication) {
         if (authentication == null) {

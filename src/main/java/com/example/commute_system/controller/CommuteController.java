@@ -48,7 +48,7 @@ public class CommuteController {
     public Page<Commute> getListDetail(Authentication authentication, Date startDate, Date endDate,
                                        @RequestParam("page") int page,
                                        @RequestParam("size") int size,
-                                       @RequestParam("psortBy") String sortBy,
+                                       @RequestParam("sortBy") String sortBy,
                                        @RequestParam("isAsc") boolean isAsc) {
         log.info("날짜 검색 : " + startDate + " ~ " + endDate);
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
@@ -62,7 +62,7 @@ public class CommuteController {
     public Page<Commute> getListUserDetail(Authentication authentication, String otherUsername, Date startDate, Date endDate,
                                            @RequestParam("page") int page,
                                            @RequestParam("size") int size,
-                                           @RequestParam("psortBy") String sortBy,
+                                           @RequestParam("sortBy") String sortBy,
                                            @RequestParam("isAsc") boolean isAsc) {
         log.info("사원 검색 : " + otherUsername);
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();

@@ -36,7 +36,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new CustomAccessDeniedHandler());
-
     }
 //    configure(HttpSecurity http)
 //    이 메소드는 HttpSecurity 객체를 이용해 각 요청을 먼저 intercept하여 URL별 인증 여부, login 처리, logout아웃 처리등 다양한 처리를 할 수 있다.

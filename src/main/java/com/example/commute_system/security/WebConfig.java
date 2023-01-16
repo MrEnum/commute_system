@@ -20,6 +20,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/index","/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
                 .antMatchers("/manager/signup").hasRole("MANAGER")
+                .antMatchers("/chatroom").hasAnyRole("NORMAL","MANAGER")
                 .and()
                 .formLogin()
                 .permitAll()

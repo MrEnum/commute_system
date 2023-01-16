@@ -49,6 +49,11 @@ dependencies {
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
 
+    //websocket
+    implementation group: 'org.springframework', name: 'spring-websocket', version: '5.3.18'
+
+
+
 
 }
 

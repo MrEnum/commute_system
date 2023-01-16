@@ -50,6 +50,11 @@
                 조회
             </button>
         </div>
+        <%--출퇴근 조회--%>
+        <button class="chatting-room" style="margin-left: 270px;"
+                type="button" onclick="location.href='chat'>
+           채팅
+        </button>
     </div>
 
     <div>

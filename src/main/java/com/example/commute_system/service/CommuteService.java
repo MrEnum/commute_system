@@ -12,11 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -101,29 +103,51 @@ public class CommuteService {
         return "퇴근 완료";
     }
 
-   
+
     //기본 탐색
     @Transactional
-    public List<Commute> getCommuteList(String role, String username) {
-        //일반 사원일 경우
-        if (role.equals("ROLE_NORMAL")) {
-            return commuteRepository.findAllByUsernameOrderByIdDesc(username);
-        } else {
-            return commuteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        }
-    }
-    
-    //유저 검색
-    @Transactional
-    public Page<Commute> getCommuteListUserDetail(String role, String otherUsername, Date startDate, Date endDate, Date date, Date endDate1, int page, int size, String sortBy, boolean isAsc) {
+    public Page<Commute> getCommuteList(String role, String username, int page, int size, String sortBy, boolean isAsc) {
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
-        Pageable pageable = PageRequest.of(page,size,sort);//pageable객체를 인스턴스화해준다.
+        Pageable pageable = PageRequest.of(page, size, sort);//pageable객체를 인스턴스화해준다.
 
-        LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
+        //일반 사원일 경우
+        if (role.equals("ROLE_NORMAL")) {
+            return commuteRepository.findAllByUsernameOrderByIdDesc(username, pageable);
+        } else {
+            return commuteRepository.findAll(pageable);
+        }
+    }
+
+//    @Transactional
+//    public List<Commute> getCommuteList(String role, String username) {
+//
+//
+//        //일반 사원일 경우
+//        if (role.equals("ROLE_NORMAL")) {
+//            return commuteRepository.findAllByUsernameOrderByIdDesc(username);
+//        } else {
+//            return commuteRepository.findAll();
+//        }
+//    }
+
+
+    //유저 검색
+    @Transactional
+    public Page<Commute> getCommuteListUserDetail(String role, String otherUsername, String startDate, String endDate, int page, int size, String sortBy, boolean isAsc) throws ParseException {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);//pageable객체를 인스턴스화해준다.
+
+        //Date타입으로 만듬
+        SimpleDateFormat transformat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        Date startDate2 = transformat.parse(startDate);
+        Date endDate2 = transformat.parse(endDate);
+        //Date타입 LocalDateTime타입으로 변환
+        LocalDateTime startDateTime = startDate2.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
-        LocalDateTime endDateTime = endDate.toInstant() // Date -> Instant
+        LocalDateTime endDateTime = endDate2.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
 
@@ -137,23 +161,27 @@ public class CommuteService {
 
     //날짜 검색
     @Transactional
-    public Page<Commute> getCommuteListDetail(String role, String name, Date startDate, Date endDate, int page, int size, String sortBy, boolean isAsc) {
+    public Page<Commute> getCommuteListDetail(String role, String name, String startDate, String endDate, int page, int size, String sortBy, boolean isAsc) throws ParseException {
 
         Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
-        Pageable pageable = PageRequest.of(page,size,sort);//pageable객체를 인스턴스화해준다.
+        Pageable pageable = PageRequest.of(page, size, sort);//pageable객체를 인스턴스화해준다.
 
+        //Date타입으로 만듬
+        SimpleDateFormat transformat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+        Date startDate2 = transformat.parse(startDate);
+        Date endDate2 = transformat.parse(endDate);
         //Date객체를 LocalDateTime객체로 변환
-        LocalDateTime startDateTime = startDate.toInstant() // Date -> Instant
+        LocalDateTime startDateTime = startDate2.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
-        LocalDateTime endDateTime = endDate.toInstant() // Date -> Instant
+        LocalDateTime endDateTime = endDate2.toInstant() // Date -> Instant
                 .atZone(ZoneId.systemDefault()) // Instant -> ZonedDateTime
                 .toLocalDateTime(); // ZonedDateTime -> LocalDateTime;
 
         //일반 사원일 경우
         if (role.equals("ROLE_NORMAL")) {
-            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(name, startDateTime, endDateTime ,pageable);
+            return commuteRepository.findAllByNameAndLocalDateTimeNowBetweenOrderByIdDesc(name, startDateTime, endDateTime, pageable);
         } else {
             return commuteRepository.findAllByLocalDateTimeNowBetweenOrderByIdDesc(startDateTime, endDateTime, pageable);
         }

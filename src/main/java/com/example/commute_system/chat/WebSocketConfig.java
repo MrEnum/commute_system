@@ -1,4 +1,4 @@
-package com.example.commute_system.security;
+package com.example.commute_system.chat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

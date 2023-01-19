@@ -80,22 +80,22 @@ public class CommuteController {
 
 
     //다가져와
-@ResponseBody
-@GetMapping("/commute_list/all")
-public Page<Commute> commuteList(Model model, Authentication authentication,
-                                 @RequestParam("page") int page,
-                                 @RequestParam("size") int size,
-                                 @RequestParam("sortBy") String sortBy,
-                                 @RequestParam("isAsc") boolean isAsc
-) {
-    String username = authentication.getName();
-    page = page - 1;
-    log.info("출퇴근 기록 열람 / 이름 : " + username);
-    UserDetail userDetail = (UserDetail) authentication.getPrincipal();
-    String role = userDetail.getRole();
-    Page<Commute> commutePage = commuteService.getCommuteList(role, username, page, size, sortBy, isAsc);
-    model.addAttribute("pageRange", commutePage.getTotalPages());
+    @ResponseBody
+    @GetMapping("/commute_list/all")
+    public Page<Commute> commuteList(Model model, Authentication authentication,
+                                     @RequestParam("page") int page,
+                                     @RequestParam("size") int size,
+                                     @RequestParam("sortBy") String sortBy,
+                                     @RequestParam("isAsc") boolean isAsc
+    ) {
+        String username = authentication.getName();
+        page = page - 1;
+        log.info("출퇴근 기록 열람 / 이름 : " + username);
+        UserDetail userDetail = (UserDetail) authentication.getPrincipal();
+        String role = userDetail.getRole();
+        Page<Commute> commutePage = commuteService.getCommuteList(role, username, page, size, sortBy, isAsc);
+        model.addAttribute("pageRange", commutePage.getTotalPages());
 
-    return commutePage;
-}
+        return commutePage;
+    }
 }

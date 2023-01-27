@@ -2,7 +2,6 @@ package com.example.commute_system.controller;
 
 import com.example.commute_system.domain.Room;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;

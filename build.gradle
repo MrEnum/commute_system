@@ -2,11 +2,13 @@ plugins {
     id 'org.springframework.boot' version '2.7.4'
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
     id 'java'
+    id 'war'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+apply plugin: 'war'
 
 configurations {
     compileOnly {
@@ -43,7 +45,7 @@ dependencies {
     implementation 'javax.servlet:jstl'
 
 //    JSP hot reload 설정하기 (재시동 x)
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     //jsoup
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
@@ -54,10 +56,22 @@ dependencies {
 
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
+    //war배포 전용
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 
 
 }
+
+bootWar {
+    archiveBaseName= '-'
+    archiveFileName='-.war'
+    archiveVersion = "0.0.0"
+}
+
+//jar {
+//    enabled = false
+//}
 
 tasks.named('test') {
     useJUnitPlatform()

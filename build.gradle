@@ -51,7 +51,6 @@ dependencies {
 
     //websocket
     implementation group: 'org.springframework', name: 'spring-websocket', version: '5.3.18'
-
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
 

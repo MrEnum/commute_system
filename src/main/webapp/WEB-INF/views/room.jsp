@@ -87,11 +87,11 @@
 
 <script type="text/javascript">
     var ws;
-    window.onload = function () {
-        getRoom();
-        createRoom();
+    window.onload = function () {//윈도우가 시작되면
+        getRoom();              //채팅방을 조회하고
+        createRoom();           //채팅방을 만들어라
     }
-
+    //uri,
     function getRoom() {
         commonAjax('/getRoom', "", 'post', function (result) {
             createChatingRoom(result);
@@ -130,13 +130,13 @@
         }
     }
 
-    function commonAjax(url, parameter, type, calbak, contentType) {
+    function commonAjax(url, parameter, type, calbak, contentType) {// 경로, 파라미터, http메소드타입,
         $.ajax({
             url: url,
             data: parameter,
             type: type,
             contentType: contentType != null ? contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-            success: function (res) {
+            success: function (res) {//성공할시 리스폰스값을 가져옴
                 calbak(res);
             },
             error: function (err) {

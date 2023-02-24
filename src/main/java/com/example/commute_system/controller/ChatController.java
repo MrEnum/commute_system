@@ -15,25 +15,29 @@ import java.util.stream.Collectors;
 
 @Controller
 public class ChatController {
-    List<Room> roomList = new ArrayList<Room>();
-    static int roomNumber = 0;
+    List<Room> roomList = new ArrayList<Room>();    //roolist를 메모리에 저장?
+    static int roomNumber = 0;                   //
+
+
     @RequestMapping("/chat")
     public ModelAndView chat() {
+        //ModelAndView클래스
         ModelAndView mv = new ModelAndView();
         mv.setViewName("chat");
         return mv;
     }
+
     //방 페이지
     @RequestMapping("/room")
     public ModelAndView room() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("room");
+        mv.setViewName("room");//어디 페이지로 보낼것인지 set
         return mv;
     }
 
     //방 생성하기
     @RequestMapping("/createRoom")
-    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
+    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){ //@ResponseBody가 붙어 있음 스트링값을 그대로 반환합니다.
         String roomName = (String) params.get("roomName");
         if(roomName != null && !roomName.trim().equals("")) {
             Room room = new Room();

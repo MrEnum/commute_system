@@ -14,14 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/index","/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
+                .antMatchers("/index", "/commute_list/**").hasAnyRole("NORMAL", "MANAGER")
                 .antMatchers("/manager/signup").hasRole("MANAGER")
-                .antMatchers("/chatroom").hasAnyRole("NORMAL","MANAGER")
+                .antMatchers("/chatroom").hasAnyRole("NORMAL", "MANAGER")
                 .and()
                 .formLogin()
                 .permitAll()
@@ -52,4 +50,3 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
     }
 }
-
